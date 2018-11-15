@@ -10,10 +10,10 @@ import * as AuthService from "../../services/Auth/services";
 import Spin from "antd/es/spin/index";
 import {withRouter} from 'react-router-dom'
 import {message} from "antd/lib/index";
-import Email from "./Fields/Email";
-import Username from "./Fields/Username";
-import Password from "./Fields/Password";
-import Confirm from "./Fields/Confirm";
+import Email from "../Common/Fields/Email";
+import Username from "../Common/Fields/Username";
+import Password from "../Common/Fields/Password";
+import Confirm from "../Common/Fields/Confirm";
 
 const FormItem = Form.Item;
 

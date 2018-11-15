@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "./Slider";
 import MainShownImage from "./MainShownImage";
-import UploadSubmit from "./UploadSubmit";
+import UploadSubmit from "./Submit/UploadSubmit";
 
 
 const ImageSlider = () => {

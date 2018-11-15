@@ -10,9 +10,9 @@ import {connect} from "react-redux";
 import Spin from "antd/es/spin/index";
 import {message} from "antd/lib/index";
 import {withRouter} from 'react-router-dom'
-import Confirm from "./Fields/Confirm";
-import Password from "./Fields/Password";
-import Email from "./Fields/Email";
+import Confirm from "../Common/Fields/Confirm";
+import Password from "../Common/Fields/Password";
+import Email from "../Common/Fields/Email";
 
 const FormItem = Form.Item;
 

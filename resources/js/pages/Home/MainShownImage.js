@@ -13,7 +13,7 @@ const MainShownImage = ({shownNowPic}) => {
 
 const mapStateToProps = state => {
     return {
-        shownNowPic: state.Images.shownNowPic
+        shownNowPic: state.images.shownNowPic
     };
 };
 

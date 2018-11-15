@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\InstagramProfile;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,18 +32,28 @@ class PostController extends Controller
     private function createPost($item){
         $validator = Validator::make($item, [
             'comment' => 'max:1000',
-            'post_time' => 'required|int|min:0|max:2147483647'
+            'post_time' => 'required|int|min:0|max:2147483647',
+            'poster' => 'required|string|max:255'
         ]);
-        if (!$validator->fails()) {
+        if (!$validator->fails() && $this->posterValid($item['poster'])) {
             $path = $this->storeImage($item['image']);
             Post::create([
                 'user_id' => auth()->user()['id'],
+                'login' => $item['poster'],
                 'comment' => $item['comment'],
                 'post_time' => $item['post_time'],
                 'image' => $path
             ]);
             return true;
         }
+
+        return false;
+    }
+
+    private function posterValid($poster){
+        if(InstagramProfile::where('userId', auth()->user()['id'])
+            ->where('login', $poster))
+            return true;
 
         return false;
     }

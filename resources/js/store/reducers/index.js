@@ -1,8 +1,14 @@
 import {combineReducers} from 'redux'
-import Auth from "./Auth";
-import Images from "./Images";
-import InstagramProfiles from "./InstagramProfiles";
+import auth from "./auth";
+import images from "./images";
+import instagramProfiles from "./instagramProfiles";
 
-const RootReducer = combineReducers({Auth, Images, InstagramProfiles});
+
+const RootReducer = combineReducers({
+    auth,
+    images,
+    instagramProfiles
+});
+
 
 export default RootReducer;

@@ -56,7 +56,7 @@ class Loader extends React.Component{
 
 const mapStateToProps = state => {
     return {
-        images: state.Images.images
+        images: state.images.images
     };
 };
 

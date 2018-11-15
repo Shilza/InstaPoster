@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->integer('post_time');
             $table->string('comment', 1000)->nullable();
             $table->string('image');
+            $table->string('login');
             $table->integer('created_at');
             $table->integer('updated_at');
 

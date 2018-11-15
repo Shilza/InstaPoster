@@ -17,7 +17,7 @@ const Slider = ({images}) => {
 
 const mapStateToProps = state => {
     return {
-        images: state.Images.images,
+        images: state.images.images,
     }
 };
 

@@ -13,6 +13,7 @@ import {message} from "antd/lib/index";
 import Form from "antd/es/form/Form";
 import FormItem from "antd/es/form/FormItem";
 import ProfileInfo from "./ProfileInfo";
+import Comment from "../../Common/Fields/Comment";
 
 class ImageSideBar extends React.Component {
 
@@ -75,6 +76,7 @@ class ImageSideBar extends React.Component {
         return (
             <div className='post-settings-container'>
                 <ProfileInfo getFieldDecorator={form.getFieldDecorator}/>
+                <Comment getFieldDecorator={form.getFieldDecorator}/>
                 <LocalDatePicker onCh={this.onCh} tt={this.tt} post_time={shownNowPic.post_time}/>
                 <SubmitPreview submit={this.submit} drawer={this.drawer}/>
 

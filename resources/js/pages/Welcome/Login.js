@@ -7,9 +7,9 @@ import {connect} from "react-redux";
 import {message} from "antd/lib/index";
 import {withRouter} from 'react-router-dom'
 import Spin from "antd/es/spin/index";
-import Password from "./Fields/Password";
-import Remember from "./Fields/Remember";
-import Email from "./Fields/Email";
+import Password from "../Common/Fields/Password";
+import Remember from "../Common/Fields/Remember";
+import Email from "../Common/Fields/Email";
 
 class Login extends React.Component {
 

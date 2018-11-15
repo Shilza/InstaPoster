@@ -9,7 +9,7 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import Spin from "antd/es/spin/index";
 import {message} from "antd/lib/index";
-import Email from "./Fields/Email";
+import Email from "../Common/Fields/Email";
 
 const FormItem = Form.Item;
 
