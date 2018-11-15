@@ -1,0 +1,35 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.1.0",
+        "axios": "^0.18",
+        "babel-preset-react": "^6.23.0",
+        "browser-sync": "^2.26.3",
+        "browser-sync-webpack-plugin": "^2.0.1",
+        "cross-env": "^5.1",
+        "laravel-mix": "^2.1.11",
+        "less": "^3.8.1",
+        "less-loader": "^4.1.0",
+        "lodash": "^4.17.4",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0"
+    },
+    "dependencies": {
+        "antd": "^3.10.1",
+        "prop-types": "^15.6.1",
+        "react-redux": "^5.0.7",
+        "react-router": "^4.2.0",
+        "react-router-dom": "^4.1.1",
+        "redux": "^4.0.0",
+        "redux-thunk": "^2.3.0"
+    }
+}

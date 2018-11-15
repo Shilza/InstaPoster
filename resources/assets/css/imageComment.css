@@ -1,0 +1,38 @@
+#comment-container{
+    width: 300px;
+}
+
+#comment-profile-container{
+    display: flex;
+    justify-content: start;
+    margin-bottom: 3%;
+}
+
+#comment-profile-image{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    margin-right: 3%;
+}
+
+.post-settings-container {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid #D9D9D9;
+    border-top: 1px solid #D9D9D9;
+    justify-content: space-between;
+}
+
+.date-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submit-preview-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

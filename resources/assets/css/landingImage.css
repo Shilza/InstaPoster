@@ -1,0 +1,40 @@
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+.text-divider{
+    margin-top: 8%;
+    margin-bottom: 8%;
+    text-align: center;
+    display: block;
+}
+
+.info-card{
+    margin-bottom: 5%;
+}
+
+.published-pictures {
+    max-width: 300px;
+    max-height: 300px;
+    padding: 20px;
+}
+
+.published-pictures:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.telephone-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto 0;
+}
+
+.one-line-welcome {
+    display: flex;
+    justify-content: space-around;
+}

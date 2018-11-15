@@ -1,0 +1,38 @@
+.home-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 2% 6% 2%;
+}
+
+.home-header .logo {
+    font-size: 2em;
+    font-weight: bold;
+    color: black;
+}
+
+.header-dropdown {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.header-dropdown>p {
+    font-weight: bold;
+}
+
+.add-user-action {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.add-user-modal {
+    display: flex;
+    justify-content: center;
+}
+
+.active-profile {
+    background: #DFECF1;
+}
