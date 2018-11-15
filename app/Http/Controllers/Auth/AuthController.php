@@ -10,7 +10,6 @@ use App\User;
 use App\Utils\InstagramHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -44,8 +43,24 @@ class AuthController extends Controller
             'access_token' => $token,
             'expires_in' => Carbon::now()->timestamp + auth()->factory()->getTTL() * 60,
             'user' => auth()->user(),
-            'instagramProfiles' => User::find(auth()->user()->id)->instagramProfiles
+            'instagramProfiles' => $this->getValidInstagramProfiles()
         ]);
+    }
+
+    private function getValidInstagramProfiles(){
+        $validProfiles = [];
+        foreach(User::find(auth()->user()->id)->instagramProfiles as $item){
+            $item->makeVisible('password')->toArray();
+
+            if(InstagramHelper::checkProfile($item['login'], $item['password'])) {
+                unset($item['password']);
+                array_push($validProfiles, $item);
+            }
+            else
+                InstagramProfile::where('login', $item['login'])->first()->delete();
+        }
+
+        return $validProfiles;
     }
 
     /**
@@ -57,7 +72,7 @@ class AuthController extends Controller
     {
         return response()->json([
             'user' => auth()->user(),
-            'instagramProfiles' => User::find(auth()->user()->id)->instagramProfiles], 200);
+            'instagramProfiles' => $this->getValidInstagramProfiles()], 200);
     }
 
     /**
@@ -104,9 +119,8 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if (InstagramHelper::checkProfile(
-                $request->instagramName, $request->instagramPassword)
-        ) {
+        if (InstagramHelper::checkProfile($request->instagramName, $request->instagramPassword) &&
+            !InstagramProfile::where('login', $request->instagramName)->first()) {
             $password = Hash::make($request->password);
 
             $user = User::create([

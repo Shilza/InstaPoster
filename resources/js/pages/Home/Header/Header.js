@@ -17,7 +17,10 @@ class Header extends React.Component {
             <Menu>
                 {
                     instagramProfiles.map(({login, active}) =>
-                        <Menu.Item key={login} className={active ? 'active-profile' : ''}>
+                        <Menu.Item
+                            key={login}
+                            className={active ? 'active-profile' : ''}
+                        >
                             <Profile login={login}/>
                         </Menu.Item>
                     )

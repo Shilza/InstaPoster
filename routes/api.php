@@ -35,4 +35,5 @@ Route::group(['prefix' => 'post'], function (){
 
 Route::group(['prefix' => 'inst'], function (){
     Route::post('add', 'InstagarmProfileController@add');
+    Route::post('delete', 'InstagarmProfileController@delete');
 });

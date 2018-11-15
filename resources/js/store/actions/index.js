@@ -33,6 +33,14 @@ export function addProfile(payload) {
         payload
     }
 }
+
+export function deleteProfile(payload) {
+    return {
+        type: ActionTypes.DELETE_PROFILE,
+        payload
+    }
+}
+
 export function setImages(payload) {
     return {
         type: ActionTypes.ADD_IMAGES,

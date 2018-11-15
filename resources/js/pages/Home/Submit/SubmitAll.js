@@ -7,6 +7,7 @@ import * as actions from "../../../store/actions/index";
 import * as PostService from "../../../services/Post/service";
 import SubmitAllModal from "./SubmitAllModal";
 import getActiveProfile from "../../../store/selectors/profiles";
+import getDoneImages from "../../../store/selectors/images";
 
 class SubmitAll extends React.Component {
     constructor(props) {
@@ -28,18 +29,11 @@ class SubmitAll extends React.Component {
     }
 
     onSubmit() {
-        const {images} = this.props;
+        const {images, doneImages} = this.props;
+        const countPosted = doneImages.length;
 
-        let countPosted = 0;
-
-        images.forEach(item => {
-            if (item.done)
-                countPosted++;
-        });
-
-        if (countPosted === 0) {
+        if (!countPosted)
             message.error('Submit at least one photo(set publication date)');
-        }
         else if (countPosted !== images.length)
             this.setState({visible: true, countPosted});
         else
@@ -47,10 +41,10 @@ class SubmitAll extends React.Component {
     }
 
     postImages(){
-        const {images, removeAll, post, activeProfile} = this.props;
+        const {removeAll, post, activeProfile, doneImages} = this.props;
 
         this.setState({loadingAll: true});
-        post({images, poster: activeProfile.login}).then(data => {
+        post({images: doneImages, poster: activeProfile.login}).then(data => {
             this.setState({loadingAll: false});
             removeAll();
             message.success(data.message);
@@ -80,7 +74,8 @@ class SubmitAll extends React.Component {
 const mapStateToProps = state => {
     return {
         images: state.images.images,
-        activeProfile: getActiveProfile(state)
+        activeProfile: getActiveProfile(state),
+        doneImages: getDoneImages(state)
     }
 };
 

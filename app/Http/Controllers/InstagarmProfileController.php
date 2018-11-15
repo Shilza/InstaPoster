@@ -47,4 +47,26 @@ class InstagarmProfileController extends Controller
             'message' => 'Incorrect login or password'
         ], 400);
     }
+
+    public function delete(Request $request){
+        $validator = Validator::make($request->all(), [
+            'login' => 'required|string|max:255',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                "error" => 'Validation error',
+                "message" => $validator->errors(),
+            ], 422);
+        }
+
+        $profile = InstagramProfile::where('login', $request->login)->first();
+        if($profile && $profile->delete())
+            return response()->json([
+                'message' => 'Profile successfully deleted',
+            ], 200);
+        else
+            return response()->json([
+                'message' => 'Invalid data'
+            ], 400);
+    }
 }

@@ -14,3 +14,17 @@ export function addProfile(payload) {
             }
         ));
 }
+
+export function deleteProfile(payload) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+                Http.post('api/inst/delete', payload)
+                    .then(({data}) => {
+                        dispatch(action.deleteProfile(payload.login));
+
+                        resolve(data);
+                    })
+                    .catch(err => reject(err.response.data))
+            }
+        ));
+}

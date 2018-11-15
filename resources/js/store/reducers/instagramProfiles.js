@@ -4,7 +4,7 @@ const initialState = {
     profiles: [],
 };
 
-const InstagramProfiles = (state = initialState, {type, payload = null}) => {
+const instagramProfiles = (state = initialState, {type, payload = null}) => {
 
     switch (type) {
         case ActionTypes.SET_PROFILES:
@@ -13,6 +13,8 @@ const InstagramProfiles = (state = initialState, {type, payload = null}) => {
             return setProfileActive(state, payload);
         case ActionTypes.ADD_PROFILE:
             return addProfile(state, payload);
+        case ActionTypes.DELETE_PROFILE:
+            return deleteProfile(state, payload);
         default:
             return state;
     }
@@ -51,4 +53,15 @@ function addProfile(state, payload) {
     };
 }
 
-export default InstagramProfiles;
+function deleteProfile(state, payload) {
+    const profiles = state.profiles.filter(item => {
+        if(item.login !== payload)
+            return item;
+    });
+
+    return {
+        profiles
+    };
+}
+
+export default instagramProfiles;
