@@ -8,10 +8,8 @@ import Tooltip from "antd/es/tooltip/index";
 import {connect} from "react-redux";
 import * as action from "../../../store/actions/index";
 import {bindActionCreators} from "redux";
-import TextArea from "antd/es/input/TextArea";
 import {message} from "antd/lib/index";
 import Form from "antd/es/form/Form";
-import FormItem from "antd/es/form/FormItem";
 import ProfileInfo from "./ProfileInfo";
 import Comment from "../../Common/Fields/Comment";
 
@@ -56,9 +54,9 @@ class ImageSideBar extends React.Component {
         const {date, time} = this.state;
         const {form} = this.props;
 
-        if(moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix() > moment().unix()) {
+        const post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
+        if(post_time > moment().unix()) {
             const {setDone, shownNowPic} = this.props;
-            const post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
             form.validateFields((err, {comment}) => {
                 if (!err){
                     comment = comment ? comment : "";
@@ -76,7 +74,9 @@ class ImageSideBar extends React.Component {
         return (
             <div className='post-settings-container'>
                 <ProfileInfo getFieldDecorator={form.getFieldDecorator}/>
-                <Comment getFieldDecorator={form.getFieldDecorator}/>
+                <Comment
+                    getFieldDecorator={form.getFieldDecorator}
+                />
                 <LocalDatePicker onCh={this.onCh} tt={this.tt} post_time={shownNowPic.post_time}/>
                 <SubmitPreview submit={this.submit} drawer={this.drawer}/>
 
@@ -116,7 +116,9 @@ const LocalDatePicker = ({onCh, tt, post_time}) => {
         <div className='date-picker'>
 
             <DatePicker onChange={onCh} defaultValue={date} format={dateFormat}/>
-            <TimePicker defaultValue={moment(time._i,timeFormat)} format={timeFormat} style={{maxWidth: '100px'}}
+            <TimePicker defaultValue={moment(time._i,timeFormat)}
+                        format={timeFormat}
+                        style={{maxWidth: '100px'}}
                         onChange={tt}/>
         </div>
     );

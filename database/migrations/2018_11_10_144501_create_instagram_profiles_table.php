@@ -15,7 +15,7 @@ class CreateInstagramProfilesTable extends Migration
     {
         Schema::create('instagram_profiles', function (Blueprint $table) {
             $table->unsignedInteger('id')->index();
-            $table->string('login', 30);
+            $table->string('login', 30)->unique();
             $table->string('password', 64);
             $table->foreign('id')
                 ->references('id')->on('users')

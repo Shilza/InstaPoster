@@ -3,7 +3,6 @@ import Slider from "./Slider";
 import MainShownImage from "./MainShownImage";
 import UploadSubmit from "./Submit/UploadSubmit";
 
-
 const ImageSlider = () => {
     return (
         <div className='sliderImages'>

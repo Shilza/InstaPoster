@@ -3,6 +3,7 @@ export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 export const SET_PROFILES = 'SET_PROFILES';
 export const SET_PROFILE_ACTIVE = 'SET_PROFILE_ACTIVE';
+export const ADD_PROFILE = 'ADD_PROFILE';
 
 export const ADD_IMAGES = 'ADD_IMAGES';
 export const SET_SHOWN_IMAGE = 'SET_SHOWN_IMAGE';

@@ -4,6 +4,10 @@ import Modal from "antd/es/modal/Modal";
 import Form from "antd/es/form/Form";
 import Username from "../../Common/Fields/Username";
 import Password from "../../Common/Fields/Password";
+import {bindActionCreators} from "redux";
+import {connect} from "react-redux";
+import {message} from "antd/lib/index";
+import * as InstagramService from "../../../services/InstagramProfiles/service";
 
 class AddUserModal extends React.Component {
 
@@ -25,7 +29,23 @@ class AddUserModal extends React.Component {
     }
 
     onAdd() {
+        const {addProfile, form} = this.props;
         this.setState({loading: true});
+
+        form.validateFields((err, {username, password}) => {
+            if(!err){
+                addProfile({instagramName: username, instagramPassword: password})
+                    .then(data => {
+                        this.setState({loading: false, visible: false});
+                        message.success(data.message);
+                    })
+                    .catch(err => {
+                        this.setState({loading: false});
+                        message.error(err.message);
+                    });
+            }
+
+        });
     }
 
     showModal() {
@@ -47,6 +67,7 @@ class AddUserModal extends React.Component {
                     visible={visible}
                     title="Add new Instagram user"
                     onCancel={this.handleCancel}
+                    onOk={this.onAdd}
                     footer={[
                         <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
                         <Button
@@ -71,4 +92,10 @@ class AddUserModal extends React.Component {
     }
 }
 
-export default Form.create()(AddUserModal);
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators({
+        addProfile: InstagramService.addProfile
+    }, dispatch);
+};
+
+export default Form.create()(connect(null, mapDispatchToProps)(AddUserModal));

@@ -11,6 +11,8 @@ const InstagramProfiles = (state = initialState, {type, payload = null}) => {
             return setProfiles(state, payload);
         case ActionTypes.SET_PROFILE_ACTIVE:
             return setProfileActive(state, payload);
+        case ActionTypes.ADD_PROFILE:
+            return addProfile(state, payload);
         default:
             return state;
     }
@@ -38,6 +40,15 @@ function setProfileActive(state, payload) {
     return {
         profiles
     }
+}
+
+function addProfile(state, payload) {
+    let profiles = [...state.profiles];
+    profiles.push(payload);
+
+    return {
+        profiles
+    };
 }
 
 export default InstagramProfiles;

@@ -16,7 +16,6 @@ class MiniPicActions extends React.Component {
     remove() {
         const {removeImage, image} = this.props;
         removeImage(image);
-
     }
 
     render() {

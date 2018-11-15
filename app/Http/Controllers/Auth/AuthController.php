@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Console\Commands\CheckInstagramProfile;
 use App\Http\Controllers\Controller;
 use App\InstagramProfile;
 use App\Notifications\RegisterSuccess;
 use App\User;
+use App\Utils\InstagramHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
@@ -75,12 +78,12 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        try{
+        try {
             return response()->json([
                 'access_token' => auth()->refresh(),
                 'expires_in' => Carbon::now()->timestamp + auth()->factory()->getTTL() * 60
             ]);
-        } catch (TokenExpiredException $e){
+        } catch (TokenExpiredException $e) {
             return response()->json(['message' => 'token expired'], 401);
         }
     }
@@ -101,8 +104,10 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if($this->checkInstagram($request->instagramName, $request->instagramPassword)){
-            $password =  Hash::make($request->password);
+        if (InstagramHelper::checkProfile(
+                $request->instagramName, $request->instagramPassword)
+        ) {
+            $password = Hash::make($request->password);
 
             $user = User::create([
                 'username' => $request->username,
@@ -121,16 +126,5 @@ class AuthController extends Controller
         }
 
         return response()->json(['message' => 'Instagram login or password invalid'], 400);
-    }
-
-    private function checkInstagram($login, $password){
-        try {
-            \InstagramAPI\Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-            $instagram = new \InstagramAPI\Instagram(false, false);
-            $instagram->login($login, $password);
-            return true;
-        } catch (\Exception $e){
-            return false;
-        }
     }
 }

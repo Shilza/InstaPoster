@@ -226,10 +226,6 @@
     align-items: flex-end;
 }
 
-.header-dropdown>p {
-    font-weight: bold;
-}
-
 .add-user-action {
     display: flex;
     justify-content: space-around;

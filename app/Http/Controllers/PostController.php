@@ -29,30 +29,28 @@ class PostController extends Controller
         return $imagePath;
     }
 
-    private function createPost($item){
+    private function createPost($item, $poster)
+    {
         $validator = Validator::make($item, [
             'comment' => 'max:1000',
-            'post_time' => 'required|int|min:0|max:2147483647',
-            'poster' => 'required|string|max:255'
+            'post_time' => 'required|int|min:0|max:2147483647'
         ]);
-        if (!$validator->fails() && $this->posterValid($item['poster'])) {
+        if (!$validator->fails() && $this->posterValid($poster)) {
             $path = $this->storeImage($item['image']);
             Post::create([
                 'user_id' => auth()->user()['id'],
-                'login' => $item['poster'],
+                'login' => $poster,
                 'comment' => $item['comment'],
                 'post_time' => $item['post_time'],
                 'image' => $path
             ]);
-            return true;
         }
-
-        return false;
     }
 
-    private function posterValid($poster){
-        if(InstagramProfile::where('userId', auth()->user()['id'])
-            ->where('login', $poster))
+    private function posterValid($poster)
+    {
+        if (InstagramProfile::where('id', auth()->user()['id'])
+            ->where('login', $poster)->first())
             return true;
 
         return false;
@@ -60,12 +58,18 @@ class PostController extends Controller
 
     public function create(Request $request)
     {
-        if (count($request->json()->all())) {
-            foreach ($request->json()->all() as $item)
-                $this->createPost($item);
+        $validator = Validator::make($request->all(), [
+            'images' => 'required|array|min:1',
+            'poster' => 'required|string|max:255'
+        ]);
+        if (!$validator->fails())
+            if (count($request->images)) {
+                foreach ($request->images as $item)
+                    $this->createPost($item, $request->poster);
 
-            return response()->json(['message' => 'Submitted successfully'], 200);
-        }
+                return response()->json(['message' => 'Submitted successfully'], 200);
+            }
+
         return response()->json(['message' => 'Incorrect request'], 400);
     }
 

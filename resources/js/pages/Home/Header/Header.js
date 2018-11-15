@@ -44,12 +44,7 @@ class Header extends React.Component {
                 </a>
                 <Dropdown overlay={menu} trigger={['click']}>
                     <div className='header-dropdown'>
-                        <div style={{display: 'flex', justifyContent: 'space-around', alignItems: 'flex-end'}}>
-                            <a style={{marginRight: '5%'}}>{user.username}</a>
-                            <img id='comment-profile-image'
-                                 src={'https://pp.userapi.com/c844617/v844617683/f8d9c/lKSt8v-NIyQ.jpg?ava=1'}/>
-
-                        </div>
+                        <a style={{marginRight: '5%'}}>{user.username}</a>
                         <a className="ant-dropdown-link" href="#">
                             <Icon type="down"/>
                         </a>

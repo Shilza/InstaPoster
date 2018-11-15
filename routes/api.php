@@ -32,3 +32,7 @@ Route::group([
 Route::group(['prefix' => 'post'], function (){
     Route::post('create', 'PostController@create');
 });
+
+Route::group(['prefix' => 'inst'], function (){
+    Route::post('add', 'InstagarmProfileController@add');
+});

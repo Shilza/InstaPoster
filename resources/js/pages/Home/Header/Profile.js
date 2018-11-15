@@ -17,7 +17,6 @@ class Profile extends React.Component {
 
     render() {
         const {login} = this.props;
-
         return <span onClick={this.setProfileActive}>{login}</span>
     }
 }

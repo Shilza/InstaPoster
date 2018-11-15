@@ -27,6 +27,12 @@ export function setProfileActive(payload) {
     }
 }
 
+export function addProfile(payload) {
+    return {
+        type: ActionTypes.ADD_PROFILE,
+        payload
+    }
+}
 export function setImages(payload) {
     return {
         type: ActionTypes.ADD_IMAGES,
