@@ -5,7 +5,7 @@ const initialState = {
     shownNowPic: ''
 };
 
-const Images = (state = initialState, {type, payload = null}) => {
+const images = (state = initialState, {type, payload = null}) => {
     switch (type) {
         case ActionTypes.ADD_IMAGES:
             return addImages(state, payload);
@@ -97,4 +97,4 @@ function removeImage(state, payload) {
     }
 }
 
-export default Images;
+export default images;

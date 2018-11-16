@@ -31,6 +31,7 @@ Route::group([
 
 Route::group(['prefix' => 'post'], function (){
     Route::post('create', 'PostController@create');
+    Route::get('get', 'PostController@get');
 });
 
 Route::group(['prefix' => 'inst'], function (){

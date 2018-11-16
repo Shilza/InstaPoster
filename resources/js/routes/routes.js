@@ -4,6 +4,7 @@ import Home from '../pages/Home/Home'
 import Register from '../pages/Welcome/Register'
 import ForgotPass from '../pages/Welcome/ForgotPass'
 import ResetPass from '../pages/Welcome/ResetPass'
+import PostManager from '../pages/Home/PostManager/PostManager'
 
 export const routes = [
     {
@@ -41,5 +42,11 @@ export const routes = [
         exact: true,
         auth: false,
         component: ResetPass
+    },
+    {
+        path: '/manager',
+        exact: true,
+        auth: true,
+        component: PostManager
     }
 ];

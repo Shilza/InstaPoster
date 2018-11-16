@@ -63,7 +63,7 @@ export function updatePassword(credentials) {
         new Promise((resolve, reject) => {
             Http.post('api/auth/password/reset', credentials)
                 .then(({data}) => {
-                    return resolve(data);
+                    return resolve(data.message);
                 })
                 .catch(err => {
                     const data = {

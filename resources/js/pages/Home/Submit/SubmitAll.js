@@ -4,7 +4,7 @@ import connect from "react-redux/es/connect/connect";
 import {message} from "antd/lib/index";
 import {bindActionCreators} from "redux";
 import * as actions from "../../../store/actions/index";
-import * as PostService from "../../../services/Post/service";
+import * as PostService from "../../../services/Post/services";
 import SubmitAllModal from "./SubmitAllModal";
 import getActiveProfile from "../../../store/selectors/profiles";
 import getDoneImages from "../../../store/selectors/images";
@@ -40,18 +40,20 @@ class SubmitAll extends React.Component {
             this.postImages();
     }
 
-    postImages(){
+    postImages() {
         const {removeAll, post, activeProfile, doneImages} = this.props;
 
         this.setState({loadingAll: true});
-        post({images: doneImages, poster: activeProfile.login}).then(data => {
-            this.setState({loadingAll: false});
-            removeAll();
-            message.success(data.message);
-        }).catch(data => {
-            this.setState({loadingAll: false});
-            message.error(data.message)
-        });
+        post({images: doneImages, poster: activeProfile.login})
+            .then(data => {
+                this.setState({loadingAll: false});
+                removeAll();
+                message.success(data);
+            })
+            .catch(data => {
+                this.setState({loadingAll: false});
+                message.error(data)
+            });
     }
 
     render() {

@@ -12,4 +12,8 @@ class InstagramProfile extends Model
 
     const UPDATED_AT = null;
     const CREATED_AT = null;
+
+    public function posts(){
+        return $this->hasMany('App\Post', 'login', 'login');
+    }
 }

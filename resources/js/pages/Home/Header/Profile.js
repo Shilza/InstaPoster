@@ -2,24 +2,15 @@ import React from "react";
 import {bindActionCreators} from "redux";
 import * as actions from "../../../store/actions";
 import {connect} from "react-redux";
-import Icon from "antd/es/icon/index";
-import {message} from "antd/lib/index";
-import * as InstagramService from "../../../services/InstagramProfiles/service";
+import DeleteProfileModal from "./DeleteProfileModal";
 
 class Profile extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.setProfileActive = this.setProfileActive.bind(this);
-        this.deleteProfile = this.deleteProfile.bind(this);
-    }
 
-    deleteProfile() {
-        const {deleteProfile, login} = this.props;
-        deleteProfile({login})
-            .then(data => message.success(data.message))
-            .catch(err => message.error(err.message));
     }
 
     setProfileActive() {
@@ -30,12 +21,8 @@ class Profile extends React.Component {
         const {login} = this.props;
         return (
             <div className='header-profile'>
-            <span onClick={this.setProfileActive}>{login}</span>
-                <Icon
-                    style={{fontSize: 12}}
-                    type="close"
-                    onClick={this.deleteProfile}
-                />
+                <span onClick={this.setProfileActive}>{login}</span>
+                <DeleteProfileModal login={login}/>
             </div>
         );
     }
@@ -43,8 +30,7 @@ class Profile extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        setProfileActive: actions.setProfileActive,
-        deleteProfile: InstagramService.deleteProfile
+        setProfileActive: actions.setProfileActive
     }, dispatch);
 };
 

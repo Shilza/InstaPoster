@@ -17,6 +17,7 @@ mix.react('resources/js/app.js', 'public/js')
             'resources/assets/css/imageComment.css',
             'resources/assets/css/imagesSlider.css',
             'resources/assets/css/header.css',
+            'resources/assets/css/postManager.css',
             'node_modules/antd/dist/antd.css'
         ],
         'public/css/all.css');

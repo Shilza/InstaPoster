@@ -14,16 +14,15 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->unsignedInteger('user_id')->index();
+            $table->string('login');
             $table->integer('post_time');
             $table->string('comment', 1000)->nullable();
             $table->string('image');
-            $table->string('login');
             $table->integer('created_at');
             $table->integer('updated_at');
 
-            $table->foreign('user_id')
-                ->references('id')->on('users')
+            $table->foreign('login')
+                ->references('login')->on('instagram_profiles')
                 ->onDelete('cascade');
         });
     }

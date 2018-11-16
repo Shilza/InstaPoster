@@ -1,0 +1,24 @@
+.profile-manager {
+    padding: 2% 6% 2%;
+}
+
+.post-manager-post {
+    display: flex;
+    justify-content: space-around;
+    max-width: 300px;
+    flex: 1 0 21%;
+    margin: 1%;
+    border: 1px solid #D6D6D6;
+    padding: 10px;
+    border-radius: 3%;
+}
+
+.post-manager-posts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.post-manager-image {
+    width: 100px;
+    height: 100px;
+}

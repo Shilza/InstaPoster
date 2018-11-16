@@ -47,16 +47,16 @@ class AuthController extends Controller
         ]);
     }
 
-    private function getValidInstagramProfiles(){
+    private function getValidInstagramProfiles()
+    {
         $validProfiles = [];
-        foreach(User::find(auth()->user()->id)->instagramProfiles as $item){
+        foreach (User::find(auth()->user()->id)->instagramProfiles as $item) {
             $item->makeVisible('password')->toArray();
 
-            if(InstagramHelper::checkProfile($item['login'], $item['password'])) {
+            if (InstagramHelper::checkProfile($item['login'], $item['password'])) {
                 unset($item['password']);
                 array_push($validProfiles, $item);
-            }
-            else
+            } else
                 InstagramProfile::where('login', $item['login'])->first()->delete();
         }
 

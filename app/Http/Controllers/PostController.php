@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\InstagramProfile;
 use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -83,8 +84,19 @@ class PostController extends Controller
 
     }
 
-    public function get(Request $request)
+    public function get()
     {
+        $user = User::find(auth()->user()['id']);
+        $posts = [];
 
+        foreach ($user->instagramProfiles as $profile) {
+            $post = array_merge(
+                ['profile' => $profile->login],
+                ['posts' => $profile->posts]
+            );
+            array_push($posts, $post);
+        }
+
+        return response()->json($posts, 200);
     }
 }

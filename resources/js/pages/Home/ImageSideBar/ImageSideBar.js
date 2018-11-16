@@ -114,7 +114,6 @@ const LocalDatePicker = ({onCh, tt, post_time}) => {
 
     return (
         <div className='date-picker'>
-
             <DatePicker onChange={onCh} defaultValue={date} format={dateFormat}/>
             <TimePicker defaultValue={moment(time._i,timeFormat)}
                         format={timeFormat}

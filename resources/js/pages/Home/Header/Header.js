@@ -4,12 +4,24 @@ import Icon from "antd/es/icon/index";
 import {connect} from "react-redux";
 import Menu from "antd/es/menu/index";
 import Profile from "./Profile";
-import AddUserModal from "./AddUserModal";
+import AddProfileModal from "./AddProfileModal";
 import * as AuthService from "../../../services/Auth/services";
+import * as PostsService from "../../../services/Post/services";
 import * as actions from "../../../store/actions";
 import {bindActionCreators} from "redux";
+import {withRouter} from "react-router-dom";
 
 class Header extends React.Component {
+
+    constructor(props){
+        super(props);
+
+        this.openPostManager = this.openPostManager.bind(this);
+    }
+
+    openPostManager(){
+        this.props.history.push('/manager');
+    }
 
     render() {
         const {user, instagramProfiles, logout, removeAll} = this.props;
@@ -26,10 +38,13 @@ class Header extends React.Component {
                     )
                 }
                 <Menu.Item key="0">
-                    <AddUserModal/>
+                    <AddProfileModal/>
+                </Menu.Item>
+                <Menu.Item key='1'>
+                    <span onClick={this.openPostManager}>Post manager</span>
                 </Menu.Item>
                 <Menu.Divider/>
-                <Menu.Item key="1" onClick={
+                <Menu.Item key="2" onClick={
                     () => {
                         logout();
                         removeAll();
@@ -42,7 +57,7 @@ class Header extends React.Component {
 
         return (
             <div className='home-header'>
-                <a className='logo'>
+                <a className='logo' href='/'>
                     InstaPoster
                 </a>
                 <Dropdown overlay={menu} trigger={['click']}>
@@ -69,7 +84,8 @@ const mapDispatchToProps = dispatch => {
     return bindActionCreators({
         logout: AuthService.logout,
         removeAll: actions.removeAll,
+        getPosts: PostsService.getPosts
     }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

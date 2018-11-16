@@ -58,6 +58,10 @@ class InstagarmProfileController extends Controller
                 "message" => $validator->errors(),
             ], 422);
         }
+        if(InstagramProfile::where('id', auth()->user()['id'])->count() <= 1)
+            return response()->json([
+                'message' => 'Profile cannot be deleted, at least one account must be linked'
+            ], 400);
 
         $profile = InstagramProfile::where('login', $request->login)->first();
         if($profile && $profile->delete())

@@ -43,7 +43,7 @@ class ResetPass extends React.Component {
                     password,
                 }).then(data => {
                     this.setState({loading: false});
-                    message.success(data.message);
+                    message.success(data);
                     history.push('/');
                 }).catch(err => {
                     this.setState({loading: false});

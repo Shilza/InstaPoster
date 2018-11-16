@@ -41,6 +41,13 @@ export function deleteProfile(payload) {
     }
 }
 
+export function setPosts(payload) {
+    return {
+        type: ActionTypes.SET_POSTS,
+        payload
+    }
+}
+
 export function setImages(payload) {
     return {
         type: ActionTypes.ADD_IMAGES,

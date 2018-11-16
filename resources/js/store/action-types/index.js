@@ -6,6 +6,8 @@ export const SET_PROFILE_ACTIVE = 'SET_PROFILE_ACTIVE';
 export const ADD_PROFILE = 'ADD_PROFILE';
 export const DELETE_PROFILE = 'DELETE_PROFILE';
 
+export const SET_POSTS = 'SET_POSTS';
+
 export const ADD_IMAGES = 'ADD_IMAGES';
 export const SET_SHOWN_IMAGE = 'SET_SHOWN_IMAGE';
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
