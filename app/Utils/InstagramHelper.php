@@ -11,7 +11,7 @@ class InstagramHelper
             $instagram = new \InstagramAPI\Instagram(false, false);
             $instagram->login($login, $password);
             return true;
-        } catch (\Exception $e){
+        } catch (\InvalidArgumentException $e){
             return false;
         }
     }

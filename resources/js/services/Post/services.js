@@ -17,3 +17,18 @@ export function getPosts() {
             .then(({data}) => dispatch(action.setPosts(data)))
             .catch(({response}) => {})
 }
+
+export function deletePost(payload) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.post('api/post/delete', {id: payload})
+                .then(({data}) => {
+                    dispatch(action.deletePost(payload));
+                    resolve(data.message);
+                })
+                .catch(({response}) => {
+                    reject(response.message);
+                })
+        })
+    )
+}

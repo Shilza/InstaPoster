@@ -12,6 +12,7 @@ import {message} from "antd/lib/index";
 import Form from "antd/es/form/Form";
 import ProfileInfo from "./ProfileInfo";
 import Comment from "../../Common/Fields/Comment";
+import PostTimePicker from "../Common/PostTimePicker";
 
 class ImageSideBar extends React.Component {
 
@@ -27,18 +28,18 @@ class ImageSideBar extends React.Component {
             time
         };
 
-        this.onCh = this.onCh.bind(this);
-        this.tt = this.tt.bind(this);
+        this.datePickerChange = this.datePickerChange.bind(this);
+        this.timePickerChange = this.timePickerChange.bind(this);
         this.drawer = this.drawer.bind(this);
         this.onClose = this.onClose.bind(this);
         this.submit = this.submit.bind(this);
     }
 
-    onCh(date, dateString) {
+    datePickerChange(date, dateString) {
         this.setState({date: dateString});
     }
 
-    tt(date, dateString) {
+    timePickerChange(date, dateString) {
         this.setState({time: dateString});
     }
 
@@ -77,7 +78,11 @@ class ImageSideBar extends React.Component {
                 <Comment
                     getFieldDecorator={form.getFieldDecorator}
                 />
-                <LocalDatePicker onCh={this.onCh} tt={this.tt} post_time={shownNowPic.post_time}/>
+                <PostTimePicker
+                    datePickerChange={this.datePickerChange}
+                    timePickerChange={this.timePickerChange}
+                    post_time={shownNowPic.post_time}
+                />
                 <SubmitPreview submit={this.submit} drawer={this.drawer}/>
 
                 <Drawer
@@ -101,24 +106,6 @@ const SubmitPreview = ({submit, drawer}) => {
             <Tooltip placement="right" title={'Preview'}>
                 <a onClick={drawer}>Preview</a>
             </Tooltip>
-        </div>
-    );
-};
-
-const LocalDatePicker = ({onCh, tt, post_time}) => {
-    const timeFormat = 'HH:mm';
-    const dateFormat = 'YYYY-MM-DD';
-
-    const date = moment(moment.unix(post_time).format(dateFormat));
-    const time = moment(moment.unix(post_time).format(timeFormat));
-
-    return (
-        <div className='date-picker'>
-            <DatePicker onChange={onCh} defaultValue={date} format={dateFormat}/>
-            <TimePicker defaultValue={moment(time._i,timeFormat)}
-                        format={timeFormat}
-                        style={{maxWidth: '100px'}}
-                        onChange={tt}/>
         </div>
     );
 };

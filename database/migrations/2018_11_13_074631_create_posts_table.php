@@ -14,6 +14,7 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
+            $table->increments('id')->unique();
             $table->string('login');
             $table->integer('post_time');
             $table->string('comment', 1000)->nullable();

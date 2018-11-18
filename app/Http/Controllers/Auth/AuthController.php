@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Console\Commands\CheckInstagramProfile;
 use App\Http\Controllers\Controller;
 use App\InstagramProfile;
 use App\Notifications\RegisterSuccess;
@@ -53,11 +52,11 @@ class AuthController extends Controller
         foreach (User::find(auth()->user()->id)->instagramProfiles as $item) {
             $item->makeVisible('password')->toArray();
 
-            if (InstagramHelper::checkProfile($item['login'], $item['password'])) {
+            //if (InstagramHelper::checkProfile($item['login'], $item['password'])) {
                 unset($item['password']);
                 array_push($validProfiles, $item);
-            } else
-                InstagramProfile::where('login', $item['login'])->first()->delete();
+            //} else
+                //InstagramProfile::where('login', $item['login'])->first()->delete();
         }
 
         return $validProfiles;

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'auth',
     'namespace' => 'Auth'
-], function() {
+], function () {
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
@@ -29,12 +29,13 @@ Route::group([
     });
 });
 
-Route::group(['prefix' => 'post'], function (){
+Route::group(['prefix' => 'post'], function () {
     Route::post('create', 'PostController@create');
     Route::get('get', 'PostController@get');
+    Route::post('delete', 'PostController@delete');
 });
 
-Route::group(['prefix' => 'inst'], function (){
+Route::group(['prefix' => 'inst'], function () {
     Route::post('add', 'InstagarmProfileController@add');
     Route::post('delete', 'InstagarmProfileController@delete');
 });

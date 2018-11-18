@@ -17,10 +17,15 @@ class Header extends React.Component {
         super(props);
 
         this.openPostManager = this.openPostManager.bind(this);
+        this.openHome = this.openHome.bind(this);
     }
 
     openPostManager(){
         this.props.history.push('/manager');
+    }
+
+    openHome(){
+        this.props.history.push('/home');
     }
 
     render() {
@@ -57,7 +62,7 @@ class Header extends React.Component {
 
         return (
             <div className='home-header'>
-                <a className='logo' href='/'>
+                <a className='logo' onClick={this.openHome}>
                     InstaPoster
                 </a>
                 <Dropdown overlay={menu} trigger={['click']}>

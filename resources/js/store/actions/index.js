@@ -48,6 +48,13 @@ export function setPosts(payload) {
     }
 }
 
+export function deletePost(payload) {
+    return {
+        type: ActionTypes.DELETE_POST,
+        payload
+    }
+}
+
 export function setImages(payload) {
     return {
         type: ActionTypes.ADD_IMAGES,

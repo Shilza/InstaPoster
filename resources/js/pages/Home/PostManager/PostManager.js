@@ -1,31 +1,39 @@
 import React, {Fragment} from "react";
 import {connect} from "react-redux";
-import Posts from './Posts';
+import PostsList from './PostsList';
 import {bindActionCreators} from "redux";
 import * as PostsService from "../../../services/Post/services";
+import Tabs from "antd/es/tabs/index";
 
-class PostManager extends React.Component{
+class PostManager extends React.Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getPosts();
     }
 
     render() {
         const {posts} = this.props;
+
         return (
-            <div className='postManager'>
-                <span>Post manager</span>
-                {
-                    posts.map(item => {
-                        return (
-                            <Fragment key={item.profile}>
-                                <span>{item.profile}</span>
-                                <Posts posts={item.posts}/>
-                            </Fragment>
-                        );
-                    })
-                }
-            </div>
+            <Fragment>
+                <span className='post-manager-header'>Post manager</span>
+                <div className='post-manager'>
+                    <Tabs>
+                        {
+                            posts.map(item => {
+                                return (
+                                    <Tabs.TabPane
+                                        tab={item.profile}
+                                        key={item.profile}
+                                    >
+                                        <PostsList posts={item.posts}/>
+                                    </Tabs.TabPane>
+                                );
+                            })
+                        }
+                    </Tabs>
+                </div>
+            </Fragment>
         );
     }
 }

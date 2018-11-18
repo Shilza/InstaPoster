@@ -16,20 +16,28 @@ class PostController extends Controller
         $this->middleware(['jwt.auth']);
     }
 
+    /**
+     * @param $code_base64
+     * @return string
+     */
     private function storeImage($code_base64)
     {
         $code_base64 = str_replace('data:image/jpeg;base64,', '', $code_base64);
         $image = base64_decode($code_base64);
 
         $time = time();
-        $imagePath = 'public/post_images/' . auth()->user()['id'] . '/' . str_random(6) . $time . '.jpeg';
+        $imagePath = 'post_images/' . auth()->user()['id'] . '/' . str_random(6) . $time . '.jpeg';
 
         Storage::disk('local')->makeDirectory('public/post_images/' . auth()->user()['id']);
-        Storage::disk('local')->put($imagePath, $image);
+        Storage::disk('local')->put("public/$imagePath", $image);
 
-        return $imagePath;
+        return "storage/$imagePath";
     }
 
+    /**
+     * @param $item
+     * @param $poster
+     */
     private function createPost($item, $poster)
     {
         $validator = Validator::make($item, [
@@ -48,6 +56,10 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * @param $poster
+     * @return bool
+     */
     private function posterValid($poster)
     {
         if (InstagramProfile::where('id', auth()->user()['id'])
@@ -57,6 +69,10 @@ class PostController extends Controller
         return false;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -74,9 +90,48 @@ class PostController extends Controller
         return response()->json(['message' => 'Incorrect request'], 400);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function delete(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|int'
+        ]);
+        if (!$validator->fails()) {
+            if ($this->checkPostIdByUser($request->id) &&
+                Post::whereId( $request->id)->delete()) {
 
+                return response()->json([
+                    'message' => 'Post deleted successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Invalid post id'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                "error" => 'Validation error',
+                "message" => $validator->errors(),
+            ], 422);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    private function checkPostIdByUser($id)
+    {
+        if ($post = Post::whereId($id)->first()) {
+            foreach (User::find(auth()->user()['id'])->instagramProfiles as $profile)
+                if ($profile->login === $post->login)
+                    return true;
+        }
+
+        return false;
     }
 
     public function update(Request $request)
