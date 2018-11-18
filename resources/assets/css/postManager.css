@@ -8,20 +8,19 @@
     font-weight: bold;
 }
 
-.post-manager-post {
+.post-manager-content {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5%;
 }
 
 .post-manager-post-card {
-    max-width: 300px;
     flex: 1 0 21%;
     margin: 1%;
     border: 1px solid #D6D6D6;
     padding: 10px;
     border-radius: 3%;
-    min-width: 270px;
+    min-width: 275px;
+    max-width: 275px;
 }
 
 .post-manager-posts {
@@ -30,7 +29,15 @@
 }
 
 .post-manager-image {
-    width: 100px;
-    height: 100px;
+    min-width: 100px;
+    min-height: 100px;
+    max-width: 100px;
+    max-height: 100px;
     box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.75);
+}
+
+.post-manager-save {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3%;
 }

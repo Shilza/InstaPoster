@@ -8,6 +8,7 @@ export const DELETE_PROFILE = 'DELETE_PROFILE';
 
 export const SET_POSTS = 'SET_POSTS';
 export const DELETE_POST = 'DELETE_POST';
+export const UPDATE_POST = 'UPDATE_POST';
 
 export const ADD_IMAGES = 'ADD_IMAGES';
 export const SET_SHOWN_IMAGE = 'SET_SHOWN_IMAGE';

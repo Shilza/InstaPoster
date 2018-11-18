@@ -1,7 +1,5 @@
 import React from "react";
 import moment from 'moment';
-import DatePicker from "antd/es/date-picker/index";
-import TimePicker from "antd/es/time-picker/index";
 import Drawer from "antd/es/drawer/index";
 import Button from "antd/es/button/button";
 import Tooltip from "antd/es/tooltip/index";
@@ -86,7 +84,7 @@ class ImageSideBar extends React.Component {
                 <SubmitPreview submit={this.submit} drawer={this.drawer}/>
 
                 <Drawer
-                    width={640}
+                    width='75%'
                     placement="right"
                     closable={false}
                     onClose={this.onClose}

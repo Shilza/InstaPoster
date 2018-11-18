@@ -55,6 +55,13 @@ export function deletePost(payload) {
     }
 }
 
+export function updatePost(payload) {
+    return {
+        type: ActionTypes.UPDATE_POST,
+        payload
+    }
+}
+
 export function setImages(payload) {
     return {
         type: ActionTypes.ADD_IMAGES,

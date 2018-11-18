@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
+    const HALF_A_YEAR = 16070400;
+
     public function __construct()
     {
         $this->middleware(['jwt.auth']);
@@ -40,9 +42,11 @@ class PostController extends Controller
      */
     private function createPost($item, $poster)
     {
+        $maxPostTime = $this->getMaxPostTime();
+
         $validator = Validator::make($item, [
             'comment' => 'max:1000',
-            'post_time' => 'required|int|min:0|max:2147483647'
+            'post_time' => "required|int|min:0|max:$maxPostTime"
         ]);
         if (!$validator->fails() && $this->posterValid($poster)) {
             $path = $this->storeImage($item['image']);
@@ -54,6 +58,10 @@ class PostController extends Controller
                 'image' => $path
             ]);
         }
+    }
+
+    private function getMaxPostTime() {
+        return time() + static::HALF_A_YEAR;
     }
 
     /**
@@ -101,7 +109,7 @@ class PostController extends Controller
         ]);
         if (!$validator->fails()) {
             if ($this->checkPostIdByUser($request->id) &&
-                Post::whereId( $request->id)->delete()) {
+                Post::whereId($request->id)->delete()) {
 
                 return response()->json([
                     'message' => 'Post deleted successfully'
@@ -136,7 +144,39 @@ class PostController extends Controller
 
     public function update(Request $request)
     {
+        $maxPostTime = $this->getMaxPostTime();
 
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|int',
+            'login' => 'required|string|max:255',
+            'comment' => 'string|max:1000',
+            'post_time' => "required|int|min:0|max:$maxPostTime"
+        ]);
+        if (!$validator->fails()) {
+            if ($this->posterValid($request->login) &&
+                $post = Post::where('id', $request->id)
+                    ->where('login', $request->login)
+                    ->first()){
+
+                $post->comment = $request->comment;
+                $post->post_time = $request->post_time;
+
+                $post->save();
+
+                return response()->json([
+                    'message' => 'Post updated successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Invalid post id'
+                ], 400);
+            }
+        } else {
+            return response()->json([
+                "error" => 'Validation error',
+                "message" => $validator->errors(),
+            ], 422);
+        }
     }
 
     public function get()

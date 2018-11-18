@@ -10,6 +10,8 @@ const posts = (state = initialState, {type, payload = null}) => {
             return setPosts(state, payload);
         case ActionTypes.DELETE_POST:
             return deletePost(state, payload);
+        case ActionTypes.UPDATE_POST:
+            return updatePost(state, payload);
         default:
             return state;
     }
@@ -28,6 +30,17 @@ function deletePost(state, payload) {
                 return item;
         });
 
+        return item;
+    });
+
+    return {
+        posts
+    }
+}
+
+function updatePost(state, payload) {
+    const posts = state.posts.map(item => {
+        item.posts = item.posts.map(item => item.id === payload.id ? payload : item);
         return item;
     });
 

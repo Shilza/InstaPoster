@@ -2,19 +2,28 @@ import React from "react";
 import TextArea from "antd/es/input/TextArea";
 import FormItem from "antd/es/form/FormItem";
 
-const Comment = ({getFieldDecorator}) => {
+const Comment = ({getFieldDecorator, autoSize, style, initialValue}) => {
     return (
-        <FormItem>
+        <FormItem style={style}>
             {getFieldDecorator('comment', {
                 rules: [{
                     max: 1000, message: 'Comment should not exceed 1000 characters!'
                 }],
+                initialValue
             })(
-                <TextArea autosize={{minRows: 7, maxRows: 7}} placeholder="Your text"/>
+                <TextArea
+                    autosize={autoSize}
+                    placeholder="Your text"
+                />
             )}
         </FormItem>
     );
 };
 
+Comment.defaultProps = {
+    autoSize: {minRows: 7, maxRows: 7},
+    style: {},
+    initialValue: null
+};
 
 export default Comment;

@@ -27,7 +27,22 @@ export function deletePost(payload) {
                     resolve(data.message);
                 })
                 .catch(({response}) => {
-                    reject(response.message);
+                    reject(response.data.message);
+                })
+        })
+    )
+}
+
+export function updatePost(payload) {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.post('api/post/update', payload)
+                .then(({data}) => {
+                    dispatch(action.updatePost(payload));
+                    resolve(data.message);
+                })
+                .catch(({response}) => {
+                    reject(response.data.message);
                 })
         })
     )
