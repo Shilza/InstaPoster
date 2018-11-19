@@ -41,3 +41,12 @@
     justify-content: space-around;
     margin-top: 3%;
 }
+
+.post-manager-empty {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 13%;
+    font-size: 2.5em;
+    font-weight: bold;
+}

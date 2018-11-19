@@ -1,11 +1,5 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 
 export const Main = (props) => {
-    return (
-        <Fragment>
-            <main>
-                {props.children}
-            </main>
-        </Fragment>
-    );
+    return <main>{props.children}</main>
 };
