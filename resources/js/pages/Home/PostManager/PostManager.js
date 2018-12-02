@@ -31,7 +31,6 @@ class PostManager extends React.Component {
                                                     : <div className='post-manager-empty'>Empty</div>
                                             }
                                         </Tabs.TabPane>
-
                                 );
                             })
                         }

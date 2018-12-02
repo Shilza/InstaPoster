@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import InstTel from '../InstTel.jpg'
+import InstTel from '../../../../public/images/telephone.png'
 import Row from "antd/es/grid/row";
 import Col from "antd/es/grid/col";
 import Card from "antd/es/card/index";
@@ -11,8 +11,8 @@ class Welcome extends React.Component {
         return (
             <Fragment>
                 <div className='telephone-login'>
-                    <img src={InstTel} style={{marginRight: '1%'}}/>
-                    <Card style={{borderRadius: '3%', height: '40%'}}>
+                    <img id="telephone-login" src={InstTel}/>
+                    <Card style={{borderRadius: '2%', height: '40%', margin: '3%'}}>
                         {this.props.children}
                     </Card>
                 </div>
@@ -26,7 +26,7 @@ const Other = () => {
     return (
         <Fragment>
             <div className='text-divider'>
-                <h1>Best of the best Instagram service</h1>
+                <h1>Best Instagram scheduler</h1>
                 <p>Because we DO IT</p>
             </div>
             <Row type="flex" justify="center" className='info-card'>

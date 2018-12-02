@@ -21,15 +21,12 @@ class ImageSideBar extends React.Component {
         const time = moment(moment.unix(props.shownNowPic.post_time).format('HH:mm'))._i ;
 
         this.state = {
-            visible: false,
             date,
             time
         };
 
         this.datePickerChange = this.datePickerChange.bind(this);
         this.timePickerChange = this.timePickerChange.bind(this);
-        this.drawer = this.drawer.bind(this);
-        this.onClose = this.onClose.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -39,14 +36,6 @@ class ImageSideBar extends React.Component {
 
     timePickerChange(date, dateString) {
         this.setState({time: dateString});
-    }
-
-    drawer() {
-        this.setState((prevState) => ({visible: !prevState.visible}));
-    }
-
-    onClose() {
-        this.setState({visible: false});
     }
 
     submit() {
@@ -81,32 +70,15 @@ class ImageSideBar extends React.Component {
                     timePickerChange={this.timePickerChange}
                     post_time={shownNowPic.post_time}
                 />
-                <SubmitPreview submit={this.submit} drawer={this.drawer}/>
-
-                <Drawer
-                    width='75%'
-                    placement="right"
-                    closable={false}
-                    onClose={this.onClose}
-                    visible={this.state.visible}
-                >
-                    <Button onClick={this.onClose}>Close</Button>
-                </Drawer>
+                <div className='submit-image-container'>
+                <Button type="primary" onClick={this.submit}>Submit</Button>
+                </div>
             </div>
         );
     }
 }
 
-const SubmitPreview = ({submit, drawer}) => {
-    return (
-        <div className='submit-preview-container'>
-            <Button type="primary" onClick={submit}>Submit</Button>
-            <Tooltip placement="right" title={'Preview'}>
-                <a onClick={drawer}>Preview</a>
-            </Tooltip>
-        </div>
-    );
-};
+
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({

@@ -38,3 +38,9 @@
     display: flex;
     justify-content: space-around;
 }
+
+@media (max-width: 425px) {
+    #telephone-login {
+        display: none;
+    }
+}

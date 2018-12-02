@@ -16,7 +16,6 @@
 }
 
 .post-settings-container {
-    height: 350px;
     display: flex;
     flex-direction: column;
     margin-left: 5%;
@@ -26,14 +25,21 @@
     justify-content: space-between;
 }
 
+@media (max-width: 425px) {
+    .post-settings-container {
+        border-top: 0;
+        margin-top: 3%;
+    }
+}
+
 .date-picker {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.submit-preview-container {
+.submit-image-container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }

@@ -19,13 +19,21 @@
     border: 1px solid #D6D6D6;
     padding: 10px;
     border-radius: 3%;
-    min-width: 275px;
-    max-width: 275px;
+    min-width: 270px;
+    max-width: 270px;
 }
 
 .post-manager-posts {
     display: flex;
     flex-wrap: wrap;
+}
+
+@media(max-width: 768px) {
+    .post-manager-posts {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }
 
 .post-manager-image {
