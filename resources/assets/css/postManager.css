@@ -23,6 +23,12 @@
     max-width: 270px;
 }
 
+@media (max-width: 425px) {
+    .post-manager-post-card {
+        margin-bottom: 6%;
+    }
+}
+
 .post-manager-posts {
     display: flex;
     flex-wrap: wrap;

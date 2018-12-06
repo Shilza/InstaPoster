@@ -1,76 +1,51 @@
 import React, {Fragment} from "react";
 import InstTel from '../../../../public/images/telephone.png'
+import Macbook from '../../../../public/images/macbook.png'
+import Imac from '../../../../public/images/imac.png'
+import Ipad from '../../../../public/images/ipad-1.png'
 import Row from "antd/es/grid/row";
 import Col from "antd/es/grid/col";
 import Card from "antd/es/card/index";
 import Meta from "antd/es/card/Meta";
 import Login from "./Login";
+import Carousel from "../../common/Carousel";
 
 class Welcome extends React.Component {
     render() {
         return (
-            <Fragment>
-                <div className='telephone-login'>
-                    <img id="telephone-login" src={InstTel}/>
-                    <Card style={{borderRadius: '2%', height: '40%', margin: '3%'}}>
-                        {this.props.children}
-                    </Card>
+            <div style={{height: '100%'}}>
+                <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                    <div className='telephone-login'>
+                        <img id="telephone-login" src={InstTel}/>
+                        <Card id='main-card'>
+                            {this.props.children}
+                        </Card>
+                    </div>
                 </div>
-                <Other/>
-            </Fragment>
+                <span>InstaPoster on different devices</span>
+                <Devices/>
+            </div>
+
         )
     }
 }
 
-const Other = () => {
+const Devices = () => {
     return (
-        <Fragment>
-            <div className='text-divider'>
-                <h1>Best Instagram scheduler</h1>
-                <p>Because we DO IT</p>
-            </div>
-            <Row type="flex" justify="center" className='info-card'>
-                <Col span={4}>
-                    <Card
-                        hoverable
-                        style={{width: 240}}
-                        cover={<img alt="example"
-                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-                    >
-                        <Meta
-                            title="Europe Street beat"
-                            description="www.instagram.com"
-                        />
-                    </Card>
-                </Col>
-                <Col span={4} offset={2}>
-                    <Card
-                        hoverable
-                        style={{width: 240}}
-                        cover={<img alt="example"
-                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-                    >
-                        <Meta
-                            title="Europe Street beat"
-                            description="www.instagram.com"
-                        />
-                    </Card>
-                </Col>
-                <Col span={4} offset={2}>
-                    <Card
-                        hoverable
-                        style={{width: 240}}
-                        cover={<img alt="example"
-                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/>}
-                    >
-                        <Meta
-                            title="Europe Street beat"
-                            description="www.instagram.com"
-                        />
-                    </Card>
-                </Col>
-            </Row>
-        </Fragment>
+        <Carousel>
+            <Fragment>
+                <h2 className="carousel-slider__caption">Desktop</h2>
+                <img className="carousel_slider__image" src={Imac}/>
+            </Fragment>
+            <Fragment>
+                <h2 className="carousel-slider__caption">Tablet</h2>
+                <img className="carousel_slider__image" src={Ipad}/>
+            </Fragment>
+            <Fragment>
+                <h2 className="carousel-slider__caption">Notebook</h2>
+                <img className="carousel_slider__image" src={Macbook}/>
+            </Fragment>
+        </Carousel>
     );
 };
 

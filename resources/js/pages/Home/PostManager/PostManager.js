@@ -34,7 +34,6 @@ class PostManager extends React.Component {
                                 );
                             })
                         }
-
                     </Tabs>
                 </div>
             </Fragment>

@@ -4,6 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Post
+ * @package App
+ * @property $comment
+ * @property $image
+ * @property $login
+ * @property $post_time
+ */
 class Post extends Model
 {
     protected $dateFormat = 'U';

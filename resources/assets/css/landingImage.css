@@ -6,14 +6,14 @@
     width: 100%;
 }
 
-.text-divider{
+.text-divider {
     margin-top: 8%;
     margin-bottom: 8%;
     text-align: center;
     display: block;
 }
 
-.info-card{
+.info-card {
     margin-bottom: 5%;
 }
 
@@ -24,7 +24,7 @@
 }
 
 .published-pictures:hover {
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .telephone-login {
@@ -34,13 +34,62 @@
     margin: 30px auto 0;
 }
 
+#main-card {
+    border-radius: 2%;
+    height: 40%;
+    margin: 3%;
+}
+
+.devices-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+}
+
+.device {
+    width: 20%;
+}
+
 .one-line-welcome {
     display: flex;
     justify-content: space-around;
 }
 
+@media (max-width: 1024px) {
+    .device {
+        width: 25%;
+    }
+    .devices-container {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: row;
+        height: auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: 768px) {
+    .devices-container {
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .device {
+        width: 75%;
+    }
+}
+
 @media (max-width: 425px) {
     #telephone-login {
         display: none;
+    }
+}
+
+@media (min-width: 1440px) {
+    .devices-container {
+        width: 70%;
     }
 }
