@@ -6,6 +6,7 @@ use App\InstagramProfile;
 use App\Jobs\UploadPhoto;
 use App\Post;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -96,8 +97,9 @@ class PostController extends Controller
                 foreach ($request->images as $item) {
                     $post = $this->createPost($item, $request->poster);
 
-                    if($post instanceof Post)
-                        UploadPhoto::dispatch($post)->delay($post->post_time);
+                    $delay = $post->post_time - now()->timestamp;
+                    if($post instanceof Post && $delay > 0)
+                        UploadPhoto::dispatch($post)->delay($delay);
                 }
 
                 return response()->json(['message' => 'Submitted successfully'], 200);

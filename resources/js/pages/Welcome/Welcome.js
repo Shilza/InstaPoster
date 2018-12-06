@@ -1,12 +1,9 @@
 import React, {Fragment} from "react";
 import InstTel from '../../../../public/images/telephone.png'
-import Macbook from '../../../../public/images/macbook.png'
-import Imac from '../../../../public/images/imac.png'
-import Ipad from '../../../../public/images/ipad-1.png'
-import Row from "antd/es/grid/row";
-import Col from "antd/es/grid/col";
+import Laptop from '../../../../public/images/laptop.png'
+import Desktop from '../../../../public/images/desktop.png'
+import Tablet from '../../../../public/images/tablet.png'
 import Card from "antd/es/card/index";
-import Meta from "antd/es/card/Meta";
 import Login from "./Login";
 import Carousel from "../../common/Carousel";
 
@@ -22,10 +19,8 @@ class Welcome extends React.Component {
                         </Card>
                     </div>
                 </div>
-                <span>InstaPoster on different devices</span>
                 <Devices/>
             </div>
-
         )
     }
 }
@@ -35,15 +30,15 @@ const Devices = () => {
         <Carousel>
             <Fragment>
                 <h2 className="carousel-slider__caption">Desktop</h2>
-                <img className="carousel_slider__image" src={Imac}/>
+                <img className="carousel-slider__image" src={Desktop}/>
+            </Fragment>
+            <Fragment>
+                <h2 className="carousel-slider__caption">Laptop</h2>
+                <img className="carousel-slider__image" src={Laptop}/>
             </Fragment>
             <Fragment>
                 <h2 className="carousel-slider__caption">Tablet</h2>
-                <img className="carousel_slider__image" src={Ipad}/>
-            </Fragment>
-            <Fragment>
-                <h2 className="carousel-slider__caption">Notebook</h2>
-                <img className="carousel_slider__image" src={Macbook}/>
+                <img className="carousel-slider__image" src={Tablet}/>
             </Fragment>
         </Carousel>
     );

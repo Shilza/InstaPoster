@@ -19,6 +19,7 @@
     -ms-flex-pack: center;
     justify-content: center;
 }
+
 .carousel-slider__nav {
     width: 15px;
     height: 2px;
@@ -35,20 +36,25 @@
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
+
+
 .carousel-slider__nav:checked {
     -webkit-animation: check 0.4s linear forwards;
     animation: check 0.4s linear forwards;
 }
-.carousel-slider__nav:checked:nth-of-type(1) ~ .carousel_slider__inner {
+
+.carousel-slider__nav:checked:nth-of-type(1) ~ .carousel-slider__inner {
     left: 0;
 }
-.carousel-slider__nav:checked:nth-of-type(2) ~ .carousel_slider__inner {
+.carousel-slider__nav:checked:nth-of-type(2) ~ .carousel-slider__inner {
     left: -100%;
 }
-.carousel-slider__nav:checked:nth-of-type(3) ~ .carousel_slider__inner {
+
+.carousel-slider__nav:checked:nth-of-type(3) ~ .carousel-slider__inner {
     left: -200%;
 }
-.carousel_slider__inner {
+
+.carousel-slider__inner {
     position: absolute;
     top: 0;
     left: 0;
@@ -64,7 +70,8 @@
     -ms-flex-flow: row nowrap;
     flex-flow: row nowrap;
 }
-.carousel_slider__contents {
+
+.carousel-slider__contents {
     height: 100%;
     padding: 2rem;
     display: -webkit-box;
@@ -87,17 +94,26 @@
     -ms-flex-pack: center;
     justify-content: center;
 }
+
 .carousel-slider__image {
     font-size: 2.7rem;
     color: #2196F3;
 }
+
 .carousel-slider__caption {
     font-weight: 500;
     margin: 2rem 0 1rem;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    text-transform: uppercase;
+    font-family: "Century Gothic";
 }
-.carousel_slider__image {
+
+.devices-header-txt {
+    font-size: 2.5em;
+    margin: 2rem 0 1rem;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-slider__image {
     max-width: 60%;
     max-height: 60%;
     margin-bottom: 3rem;

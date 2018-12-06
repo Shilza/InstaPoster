@@ -20,15 +20,22 @@ class Carousel extends React.Component {
                 }
             }
         }, 1500);
+
+        this.timerId = timerId;
     }
 
     componentWillUnmount() {
-        document.getElementById("stop").onclick = () => clearInterval(timerId);
+        clearInterval(this.timerId);
     }
 
     render() {
         return (
-            <div style={{height: '100%'}}>
+            <div style={{height: '100%', paddingTop: '5%'}}>
+                <div style={{textAlign: 'center'}}>
+                    <h2 className='devices-header-txt'>
+                    InstaPoster on different devices
+                    </h2>
+                </div>
                 <div className="carousel-slider">
                     <input type="radio" id="devices-slider-checker-0" name="carousel-slider" title="Slide 1"
                            checked="checked"
@@ -37,11 +44,11 @@ class Carousel extends React.Component {
                            className="carousel-slider__nav"/>
                     <input type="radio" id="devices-slider-checker-2" name="carousel-slider" title="Slide 3"
                            className="carousel-slider__nav"/>
-                    <div className="carousel_slider__inner">
+                    <div className="carousel-slider__inner">
                         {
                             this.props.children.map((device, index) => {
                                 return (
-                                    <div className="carousel_slider__contents" key={index}>
+                                    <div className="carousel-slider__contents" key={index}>
                                         {device}
                                     </div>
                                 );

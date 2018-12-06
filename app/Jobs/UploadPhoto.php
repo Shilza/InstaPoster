@@ -14,6 +14,8 @@ class UploadPhoto implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $tries = 2;
+
     /**
      * @var Post
      */
