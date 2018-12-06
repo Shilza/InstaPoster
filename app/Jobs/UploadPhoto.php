@@ -3,21 +3,16 @@
 namespace App\Jobs;
 
 use App\Post;
+use App\Utils\InstagramHelper;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use InstagramAPI\Instagram;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 class UploadPhoto implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * @var Instagram
-     */
-    protected $instagram;
 
     /**
      * @var Post
@@ -26,12 +21,10 @@ class UploadPhoto implements ShouldQueue
 
     /**
      * UploadPhoto constructor.
-     * @param $instagram
      * @param Post $post
      */
-    public function __construct(Instagram $instagram, Post $post)
+    public function __construct(Post $post)
     {
-        $this->instagram = $instagram;
         $this->post = $post;
     }
 
@@ -40,9 +33,6 @@ class UploadPhoto implements ShouldQueue
      */
     public function handle()
     {
-        $photo = new \InstagramAPI\Media\Photo\InstagramPhoto($this->post->image);
-        $this->instagram->timeline->uploadPhoto($photo->getFile(), [
-            'caption' => $this->post->comment
-        ]);
+        InstagramHelper::uploadPhoto($this->post);
     }
 }

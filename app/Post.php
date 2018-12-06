@@ -20,4 +20,8 @@ class Post extends Model
 
     protected $hidden = ['password', 'created_at', 'updated_at'];
 
+    public function profile()
+    {
+        return $this->belongsTo('App\InstagramProfile', 'login', 'login');
+    }
 }

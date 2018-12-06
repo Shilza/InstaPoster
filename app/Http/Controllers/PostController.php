@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\InstagramProfile;
+use App\Jobs\UploadPhoto;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
@@ -39,6 +40,7 @@ class PostController extends Controller
     /**
      * @param $item
      * @param $poster
+     * @return null
      */
     private function createPost($item, $poster)
     {
@@ -50,7 +52,7 @@ class PostController extends Controller
         ]);
         if (!$validator->fails() && $this->posterValid($poster)) {
             $path = $this->storeImage($item['image']);
-            Post::create([
+            return Post::create([
                 'user_id' => auth()->user()['id'],
                 'login' => $poster,
                 'comment' => $item['comment'],
@@ -58,6 +60,8 @@ class PostController extends Controller
                 'image' => $path
             ]);
         }
+
+        return null;
     }
 
     private function getMaxPostTime() {
@@ -89,8 +93,12 @@ class PostController extends Controller
         ]);
         if (!$validator->fails())
             if (count($request->images)) {
-                foreach ($request->images as $item)
-                    $this->createPost($item, $request->poster);
+                foreach ($request->images as $item) {
+                    $post = $this->createPost($item, $request->poster);
+
+                    if($post instanceof Post)
+                        UploadPhoto::dispatch($post)->delay($post->post_time);
+                }
 
                 return response()->json(['message' => 'Submitted successfully'], 200);
             }
