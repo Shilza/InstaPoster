@@ -4,6 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class InstagramProfile
+ * @package App
+ * @property $id
+ * @property $login
+ * @property $password
+ */
 class InstagramProfile extends Model
 {
     protected $fillable = ['id', 'login', 'password'];
