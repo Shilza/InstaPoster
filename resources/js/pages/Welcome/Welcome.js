@@ -14,7 +14,7 @@ class Welcome extends React.Component {
                 <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
                     <div className='telephone-login'>
                         <img id="telephone-login" src={InstTel}/>
-                        <Card id='main-card'>
+                        <Card id='first-page-card'>
                             {this.props.children}
                         </Card>
                     </div>

@@ -6,7 +6,6 @@ use App\InstagramProfile;
 use App\Jobs\UploadPhoto;
 use App\Post;
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -45,7 +44,7 @@ class PostController extends Controller
      */
     private function createPost($item, $poster)
     {
-        $maxPostTime = $this->getMaxPostTime();
+        $maxPostTime = time() + static::HALF_A_YEAR;
 
         $validator = Validator::make($item, [
             'comment' => 'max:1000',
@@ -65,10 +64,6 @@ class PostController extends Controller
         return null;
     }
 
-    private function getMaxPostTime() {
-        return time() + static::HALF_A_YEAR;
-    }
-
     /**
      * @param $poster
      * @return bool
@@ -78,6 +73,31 @@ class PostController extends Controller
         if (InstagramProfile::where('id', auth()->user()['id'])
             ->where('login', $poster)->first())
             return true;
+
+        return false;
+    }
+
+    /**
+     * @param Post $post
+     */
+    private function createUploadJob(Post $post)
+    {
+        $delay = $post->post_time - now()->timestamp;
+        if ($post instanceof Post && $delay > 0)
+            UploadPhoto::dispatch($post)->delay($delay);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    private function checkPostIdByUser($id)
+    {
+        if ($post = Post::whereId($id)->first()) {
+            foreach (User::find(auth()->user()['id'])->instagramProfiles as $profile)
+                if ($profile->login === $post->login)
+                    return true;
+        }
 
         return false;
     }
@@ -93,16 +113,17 @@ class PostController extends Controller
             'poster' => 'required|string|max:255'
         ]);
         if (!$validator->fails())
-            if (count($request->images)) {
-                foreach ($request->images as $item) {
-                    $post = $this->createPost($item, $request->poster);
+            if ($imagesCount = count($request->images)) {
+                foreach ($request->images as $item)
+                    if ($post = $this->createPost($item, $request->poster)) {
+                        $this->createUploadJob($post);
+                        $imagesCount--;
+                    }
 
-                    $delay = $post->post_time - now()->timestamp;
-                    if($post instanceof Post && $delay > 0)
-                        UploadPhoto::dispatch($post)->delay($delay);
-                }
-
-                return response()->json(['message' => 'Submitted successfully'], 200);
+                if (count($request->images) > 1 && $imagesCount < count($request->images))
+                    return response()->json([
+                        'message' => count($request->images) - $imagesCount . '/' . count($request->images) . ' images submitted successfully'
+                    ], 200);
             }
 
         return response()->json(['message' => 'Incorrect request'], 400);
@@ -138,20 +159,9 @@ class PostController extends Controller
     }
 
     /**
-     * @param $id
-     * @return bool
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    private function checkPostIdByUser($id)
-    {
-        if ($post = Post::whereId($id)->first()) {
-            foreach (User::find(auth()->user()['id'])->instagramProfiles as $profile)
-                if ($profile->login === $post->login)
-                    return true;
-        }
-
-        return false;
-    }
-
     public function update(Request $request)
     {
         $maxPostTime = $this->getMaxPostTime();
@@ -166,7 +176,7 @@ class PostController extends Controller
             if ($this->posterValid($request->login) &&
                 $post = Post::where('id', $request->id)
                     ->where('login', $request->login)
-                    ->first()){
+                    ->first()) {
 
                 $post->comment = $request->comment;
                 $post->post_time = $request->post_time;
@@ -189,6 +199,9 @@ class PostController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function get()
     {
         $user = User::find(auth()->user()['id']);

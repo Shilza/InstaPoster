@@ -30,11 +30,17 @@ class UploadPhoto implements ShouldQueue
         $this->post = $post;
     }
 
-    /**
-     * @throws \Exception
-     */
     public function handle()
     {
-        InstagramHelper::uploadPhoto($this->post);
+        if(InstagramHelper::uploadPhoto($this->post))
+            $this->deletePost();
+    }
+
+    private function deletePost() {
+        try {
+            $this->post->delete();
+        } catch (\Exception $e){
+            //TODO
+        }
     }
 }

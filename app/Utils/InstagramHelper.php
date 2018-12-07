@@ -7,6 +7,9 @@ use InstagramAPI\Media\Photo\InstagramPhoto;
 
 class InstagramHelper
 {
+
+    const STATUS_OK = 200;
+
     /**
      * @param $login
      * @param $password
@@ -15,7 +18,7 @@ class InstagramHelper
     public static function checkProfile($login, $password){
         try {
             Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-            $instagram = new \InstagramAPI\Instagram(false, false);
+            $instagram = new Instagram(false, false);
             $instagram->login($login, $password);
             return true;
         } catch (\Exception $e){
@@ -25,20 +28,40 @@ class InstagramHelper
 
     /**
      * @param $post
-     * @throws \Exception
+     * @return bool
      */
     public static function uploadPhoto($post) {
-        Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-        $instagram = new Instagram(false, false);
+        try {
+            Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+            $instagram = new Instagram(false, false);
 
-        $profile = $post->profile;
-        $profile->makeVisible('password')->toArray();
+            $profile = $post->profile;
+            $profile->makeVisible('password')->toArray();
 
-        $instagram->login($profile->login, $profile->password);
-        $photo = new InstagramPhoto($post->image);
+            $instagram->login($profile->login, $profile->password);
 
-        $instagram->timeline->uploadPhoto($photo->getFile(), [
-            'caption' => $post->comment
-        ]);
+            $photo = new InstagramPhoto(static::getPath($post->image));
+
+            $response = $instagram->timeline->uploadPhoto($photo->getFile(), [
+                'caption' => $post->comment
+            ]);
+
+            if ($response->getHttpResponse()->getStatusCode() == static::STATUS_OK)
+                return true;
+
+        } catch (\Exception $e) {
+            //TODO: mark post as unposted
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $image
+     * @return string
+     */
+    private static function getPath($image) {
+        $sb = substr($image, 8);
+        return "storage/app/public/" . $sb;
     }
 }

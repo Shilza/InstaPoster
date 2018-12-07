@@ -144,13 +144,13 @@
     bottom:0;
     right:0;
     top:0;
-    background:rgba(0,0,0, 0.5);
-    display:none;
+    background: rgba(0,0,0, 0.5);
+    display: none;
     transition: 1s;
 }
 
 .mini-pic-holder:hover .mini-pic-darkener{
-    display:flex;
+    display: flex;
     justify-content: space-around;
     align-items: center;
     border: 1px solid darkgrey;
