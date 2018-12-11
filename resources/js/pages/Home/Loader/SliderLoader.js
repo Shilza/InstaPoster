@@ -11,8 +11,10 @@ const SliderLoader = ({uploadRef, emitToLoadLocalImage, disabled}) => {
             <Icon type="download"/>
             <input type="file"
                    multiple
-                   accept=".jpg,.jpeg" style={{display: 'none'}}
-                   ref={uploadRef}/>
+                   accept=".jpg,.jpeg"
+                   style={{display: 'none'}}
+                   ref={uploadRef}
+            />
         </Button>
     );
 };

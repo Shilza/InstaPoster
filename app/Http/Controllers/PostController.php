@@ -112,7 +112,7 @@ class PostController extends Controller
             'images' => 'required|array|min:1',
             'poster' => 'required|string|max:255'
         ]);
-        if (!$validator->fails())
+        if (!$validator->fails()) {
             if ($imagesCount = count($request->images)) {
                 foreach ($request->images as $item)
                     if ($post = $this->createPost($item, $request->poster)) {
@@ -120,11 +120,11 @@ class PostController extends Controller
                         $imagesCount--;
                     }
 
-                if (count($request->images) > 1 && $imagesCount < count($request->images))
-                    return response()->json([
-                        'message' => count($request->images) - $imagesCount . '/' . count($request->images) . ' images submitted successfully'
-                    ], 200);
+                return response()->json([
+                    'message' => count($request->images) - $imagesCount . '/' . count($request->images) . ' images submitted successfully'
+                ], 200);
             }
+        }
 
         return response()->json(['message' => 'Incorrect request'], 400);
     }
@@ -164,12 +164,12 @@ class PostController extends Controller
      */
     public function update(Request $request)
     {
-        $maxPostTime = $this->getMaxPostTime();
+        $maxPostTime = time() + static::HALF_A_YEAR;
 
         $validator = Validator::make($request->all(), [
             'id' => 'required|int',
             'login' => 'required|string|max:255',
-            'comment' => 'string|max:1000',
+            'comment' => 'max:1000',
             'post_time' => "required|int|min:0|max:$maxPostTime"
         ]);
         if (!$validator->fails()) {

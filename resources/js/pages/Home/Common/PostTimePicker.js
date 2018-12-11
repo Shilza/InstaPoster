@@ -5,6 +5,7 @@ import moment from 'moment';
 
 const PostTimePicker = props => {
     const{
+        disabledDate,
         datePickerChange,
         timePickerChange,
         post_time
@@ -18,7 +19,12 @@ const PostTimePicker = props => {
 
     return (
         <div className='date-picker'>
-            <DatePicker onChange={datePickerChange} defaultValue={date} format={dateFormat}/>
+            <DatePicker
+                onChange={datePickerChange}
+                defaultValue={date}
+                format={dateFormat}
+                disabledDate={disabledDate}
+            />
             <TimePicker defaultValue={moment(time._i,timeFormat)}
                         format={timeFormat}
                         style={{maxWidth: '100px'}}

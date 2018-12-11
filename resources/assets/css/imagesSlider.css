@@ -82,8 +82,8 @@
 }
 
 #viewedImage {
-    max-height: 350px;
-    max-width: 350px;
+    height: 350px;
+    width: 350px;
     box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75);
 }
 

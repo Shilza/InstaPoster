@@ -11,6 +11,7 @@ import Form from "antd/es/form/Form";
 import ProfileInfo from "./ProfileInfo";
 import Comment from "../../Common/Fields/Comment";
 import PostTimePicker from "../Common/PostTimePicker";
+import DatePicker from "antd/es/date-picker/index";
 
 class ImageSideBar extends React.Component {
 
@@ -25,13 +26,21 @@ class ImageSideBar extends React.Component {
             time
         };
 
+        this.halfHour = 1800;
+
         this.datePickerChange = this.datePickerChange.bind(this);
         this.timePickerChange = this.timePickerChange.bind(this);
         this.submit = this.submit.bind(this);
+        this.disabledDate = this.disabledDate.bind(this);
     }
 
     datePickerChange(date, dateString) {
-        this.setState({date: dateString});
+        const {time} = this.state;
+        const post_time = moment(dateString + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
+        if(post_time > moment().unix() + this.halfHour)
+            this.setState({date: dateString});
+        else
+            message.error("Post data is invalid");
     }
 
     timePickerChange(date, dateString) {
@@ -43,7 +52,7 @@ class ImageSideBar extends React.Component {
         const {form} = this.props;
 
         const post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
-        if(post_time > moment().unix()) {
+        if(post_time > moment().unix() + this.halfHour) {
             const {setDone, shownNowPic} = this.props;
             form.validateFields((err, {comment}) => {
                 if (!err){
@@ -56,6 +65,10 @@ class ImageSideBar extends React.Component {
             message.error("Post data is invalid");
     }
 
+    disabledDate(current) {
+        return current > moment(moment.now()).add(6, 'M');
+    }
+
     render() {
         const {shownNowPic, form} = this.props;
 
@@ -66,6 +79,7 @@ class ImageSideBar extends React.Component {
                     getFieldDecorator={form.getFieldDecorator}
                 />
                 <PostTimePicker
+                    disabledDate={this.disabledDate}
                     datePickerChange={this.datePickerChange}
                     timePickerChange={this.timePickerChange}
                     post_time={shownNowPic.post_time}
@@ -77,8 +91,6 @@ class ImageSideBar extends React.Component {
         );
     }
 }
-
-
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
