@@ -3,6 +3,7 @@ import InstTel from '../../../../public/images/telephone.png'
 import Laptop from '../../../../public/images/laptop.png'
 import Desktop from '../../../../public/images/desktop.png'
 import Tablet from '../../../../public/images/tablet.png'
+import Logo from '../../../../public/images/logo.png'
 import Card from "antd/es/card/index";
 import Login from "./Login";
 import Carousel from "../../common/Carousel";
@@ -12,7 +13,7 @@ class Welcome extends React.Component {
         return (
             <div style={{height: '100%'}}>
                 <div className='welcome-first-form'>
-                    <h1 className='welcome-mobile-logo'>InstaPoster</h1>
+                    <img className='welcome-mobile-logo' src={Logo}/>
                     <div className='telephone-login'>
                         <img id="telephone-login-img" src={InstTel}/>
                         <Card id='first-page-card'>
