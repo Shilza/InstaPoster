@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class InstagramProfile extends Model
 {
-    protected $fillable = ['id', 'login', 'password'];
+    protected $fillable = ['id', 'login', 'password', 'avatar'];
 
     protected  $hidden = ['password'];
 

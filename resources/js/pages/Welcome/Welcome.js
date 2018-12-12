@@ -11,9 +11,10 @@ class Welcome extends React.Component {
     render() {
         return (
             <div style={{height: '100%'}}>
-                <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
+                <div className='welcome-first-form'>
+                    <h1 className='welcome-mobile-logo'>InstaPoster</h1>
                     <div className='telephone-login'>
-                        <img id="telephone-login" src={InstTel}/>
+                        <img id="telephone-login-img" src={InstTel}/>
                         <Card id='first-page-card'>
                             {this.props.children}
                         </Card>

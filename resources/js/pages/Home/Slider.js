@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import MiniPic from "./MiniPic";
 
 const Slider = ({images}) => {
-
     return (
         <div className='slider'>
             {

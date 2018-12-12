@@ -10,6 +10,19 @@ class InstagramHelper
 
     const STATUS_OK = 200;
 
+
+    public static function getProfileImage($login, $password) {
+        try {
+            Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+            $instagram = new Instagram(false, false);
+            $instagram->login($login, $password);
+
+            return $instagram->account->getCurrentUser()->getUser()->getProfilePicUrl();
+        } catch (\Exception $e){
+            return null;
+        }
+    }
+
     /**
      * @param $login
      * @param $password
@@ -64,4 +77,6 @@ class InstagramHelper
         $sb = substr($image, 8);
         return "storage/app/public/" . $sb;
     }
+
+
 }

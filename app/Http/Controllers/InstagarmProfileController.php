@@ -34,7 +34,10 @@ class InstagarmProfileController extends Controller
             $profile = InstagramProfile::create([
                 'id' => auth()->user()['id'],
                 'login' => $request->instagramName,
-                'password' => $request->instagramPassword
+                'password' => $request->instagramPassword,
+                'avatar' => InstagramHelper::getProfileImage(
+                    $request->instagramName, $request->instagramPassword
+                )
             ]);
 
             return response()->json([

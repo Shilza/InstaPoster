@@ -17,6 +17,7 @@ class CreateInstagramProfilesTable extends Migration
             $table->unsignedInteger('id')->index();
             $table->string('login', 30)->unique();
             $table->string('password', 64);
+            $table->string('avatar', 200)->nullable();
             $table->foreign('id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');

@@ -53,8 +53,9 @@ class AuthController extends Controller
             $item->makeVisible('password')->toArray();
 
             //if (InstagramHelper::checkProfile($item['login'], $item['password'])) {
+
                 unset($item['password']);
-                array_push($validProfiles, $item);
+            array_push($validProfiles, $item);
             //} else
                 //InstagramProfile::where('login', $item['login'])->first()->delete();
         }
@@ -71,7 +72,8 @@ class AuthController extends Controller
     {
         return response()->json([
             'user' => auth()->user(),
-            'instagramProfiles' => $this->getValidInstagramProfiles()], 200);
+            'instagramProfiles' => $this->getValidInstagramProfiles()
+        ], 200);
     }
 
     /**

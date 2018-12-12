@@ -37,6 +37,7 @@
 #first-page-card {
     border-radius: 2%;
     height: 40%;
+    min-width: 310px;
     margin: 3%;
 }
 
@@ -54,6 +55,17 @@
 .one-line-welcome {
     display: flex;
     justify-content: space-around;
+}
+
+.welcome-first-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.welcome-mobile-logo {
+    display: none;
+    margin-top: 5%;
 }
 
 @media (max-width: 1024px) {
@@ -83,8 +95,16 @@
 }
 
 @media (max-width: 425px) {
-    #telephone-login {
+    #telephone-login-img {
         display: none;
+    }
+
+    .telephone-login {
+        margin-top: 0;
+    }
+
+    .welcome-mobile-logo {
+        display: inline;
     }
 }
 
@@ -244,7 +264,7 @@
 
 @media (max-width: 768px) {
     .sliderImages{
-        width: 100%;
+        width: 98%;
         left: 0;
         padding: 3% 5% 0 5%;
     }
