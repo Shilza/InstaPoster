@@ -20,6 +20,7 @@ mix.react('resources/js/app.js', 'public/js')
             'resources/assets/css/postManager.css',
             'resources/assets/css/main.css',
             'resources/assets/css/carousel.css',
+            'resources/assets/css/bladeLoader.css',
             'node_modules/antd/dist/antd.css'
         ],
         'public/css/all.css');
