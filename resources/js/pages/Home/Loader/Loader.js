@@ -21,7 +21,7 @@ class Loader extends React.Component{
             addToImages(item);
     }
 
-    localOnLoad() {
+    localOnLoad(event) {
         const files = event.target.files;
 
         for (let i = 0; i < files.length; i++) {
@@ -39,7 +39,7 @@ class Loader extends React.Component{
     }
 
     componentDidMount() {
-        this.uploadRef.current.onchange = () => this.localOnLoad();
+        this.uploadRef.current.onchange = event => this.localOnLoad(event);
     }
 
     render(){
