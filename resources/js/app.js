@@ -6,8 +6,15 @@ import * as AuthService from './services/Auth/services';
 import store from './store'
 
 void async function start() {
-    if (localStorage.hasOwnProperty('access_token'))
+    if (localStorage.hasOwnProperty('access_token')) {
+
+        render(
+            <div>Sas</div>,
+            document.getElementById('root')
+        );
+
         await store.dispatch(AuthService.me());
+    }
 
     render(
         <Provider store={store}>

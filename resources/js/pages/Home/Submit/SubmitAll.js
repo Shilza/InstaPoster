@@ -7,7 +7,7 @@ import * as actions from "../../../store/actions/index";
 import * as PostService from "../../../services/Post/services";
 import SubmitAllModal from "./SubmitAllModal";
 import getActiveProfile from "../../../store/selectors/profiles";
-import getDoneImages from "../../../store/selectors/images";
+import {getDoneImages} from "../../../store/selectors/images";
 
 class SubmitAll extends React.Component {
     constructor(props) {

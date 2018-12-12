@@ -6,8 +6,8 @@ const Slider = ({images}) => {
     return (
         <div className='slider'>
             {
-                images.map((item, index) => {
-                    return <MiniPic key={item.id} item={item} checked={images.length - 1 === index}/>
+                images.map((item) => {
+                    return <MiniPic key={item.id} item={item} checked={item.shown}/>
                 })
             }
         </div>

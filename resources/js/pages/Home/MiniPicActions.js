@@ -20,12 +20,13 @@ class MiniPicActions extends React.Component {
 
     render() {
         return (
-            <div className='mini-pic-darkener' onClick={this.props.onWatch}>
+            <div className='mini-pic-darkener'>
                 <Icon
                     id={this.idWatch}
                     className='slider-mini-pic-icons'
                     type='eye'
                     theme='outlined'
+                    onClick={this.props.onWatch}
                 />
                 <Icon
                     id={this.idRemove}

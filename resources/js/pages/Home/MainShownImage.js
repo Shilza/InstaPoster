@@ -1,21 +1,20 @@
 import {connect} from "react-redux";
 import ImageSideBar from "./ImageSideBar/ImageSideBar";
+import {getShownImage} from "../../store/selectors/images";
 import React from "react";
 
-const MainShownImage = ({shownNowPic}) => {
-    console.log('re-render shownNowPic');
-
+const MainShownImage = ({shown}) => {
     return (
         <div className='img-flex'>
-            <img id='viewedImage' src={shownNowPic.image}/>
-            <ImageSideBar shownNowPic={shownNowPic}/>
+            <img id='viewedImage' src={shown.image}/>
+            <ImageSideBar shownNowPic={shown}/>
         </div>
     );
 };
 
 const mapStateToProps = state => {
     return {
-        shownNowPic: state.images.shownNowPic
+        shown: getShownImage(state)
     };
 };
 

@@ -1,8 +1,7 @@
 import * as ActionTypes from '../action-types'
 
 const initialState = {
-    images: [],
-    shownNowPic: ''
+    images: []
 };
 
 const images = (state = initialState, {type, payload = null}) => {
@@ -16,7 +15,7 @@ const images = (state = initialState, {type, payload = null}) => {
         case ActionTypes.SET_DONE:
             return setDone(state, payload);
         case ActionTypes.REMOVE_ALL:
-            return removeAll(state);
+            return removeAll();
         default:
             return state;
     }
@@ -29,27 +28,27 @@ const autoIncrement = (() => {
 
 
 function addImages(state, payload) {
-    let images = [...state.images];
+    let images = [...state.images].map(item => {
+            item.shown = false;
+            return item;
+        }
+    );
+
     const newPic = {
         image: payload,
         id: autoIncrement(),
         done: false,
-        post_time: Math.floor(Date.now() / 1000) + 3600
+        post_time: Math.floor(Date.now() / 1000) + 3600,
+        shown: true
         //Add one hour to post(default value)
     };
     images.push(newPic);
 
-    state = {
-        images,
-        shownNowPic: newPic
-    };
-
-    return state;
+    return {images};
 }
 
-function removeAll(state) {
+function removeAll() {
     return {
-        ...state,
         images: []
     };
 }
@@ -63,38 +62,36 @@ function setDone(state, payload) {
         return item;
     });
 
-    state = {
-        ...state,
-        images
-    };
-
-    return state;
+    return {images};
 }
 
 function setShown(state, payload) {
-    state = {
-        ...state,
-        shownNowPic: payload
-    };
+    let images = [...state.images].map(item => {
+        item.shown = item === payload;
 
-    return state;
+        return item;
+    });
+
+    return {images}
 }
 
 function removeImage(state, payload) {
-    let images = [...state.images];
-    let shownNowPic = state.shownNowPic;
+    let shownContains = false;
+    let images = [...state.images].filter((item, index) => {
+        if (item.id !== payload.id) {
+            if (state.images.length - 2 === index) {
+                shownContains = true;
+                item.shown = true;
+            }
 
-    images = images.filter(item => {
-        if (item !== payload)
             return item;
+        }
     });
 
-    if (payload === shownNowPic)
-        shownNowPic = images[images.length - 1];
+    if(!shownContains)
+        images[images.length - 1].shown = true;
 
-    return {
-        images, shownNowPic
-    }
+    return {images}
 }
 
 export default images;

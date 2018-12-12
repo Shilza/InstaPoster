@@ -7,12 +7,14 @@ import PrivateRoute from "./Private";
 const Routes = () => (
     <BrowserRouter>
         <Switch>
-            {routes.map((route, i) => {
-                if(route.auth)
-                    return <PrivateRoute key={i} {...route}/>;
-                else
-                    return <PublicRoute key={i} {...route}/>;
-            })}
+            {
+                routes.map((route, i) => {
+                        if (route.auth)
+                            return <PrivateRoute key={i} {...route}/>;
+                        else
+                            return <PublicRoute key={i} {...route}/>;
+                    }
+                )}
         </Switch>
     </BrowserRouter>
 );

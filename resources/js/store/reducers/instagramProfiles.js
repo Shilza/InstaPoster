@@ -1,7 +1,7 @@
 import * as ActionTypes from '../action-types'
 
 const initialState = {
-    profiles: [],
+    profiles: []
 };
 
 const instagramProfiles = (state = initialState, {type, payload = null}) => {
@@ -28,9 +28,7 @@ function setProfiles(state, payload) {
         }
     );
 
-    return {
-        profiles
-    };
+    return { profiles }
 }
 
 function setProfileActive(state, payload) {
@@ -39,18 +37,14 @@ function setProfileActive(state, payload) {
         return item;
     });
 
-    return {
-        profiles
-    }
+    return { profiles }
 }
 
 function addProfile(state, payload) {
     let profiles = [...state.profiles];
     profiles.push(payload);
 
-    return {
-        profiles
-    };
+    return { profiles };
 }
 
 function deleteProfile(state, payload) {
@@ -59,9 +53,7 @@ function deleteProfile(state, payload) {
             return item;
     });
 
-    return {
-        profiles
-    };
+    return { profiles };
 }
 
 export default instagramProfiles;

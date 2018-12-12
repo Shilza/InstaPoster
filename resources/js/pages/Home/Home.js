@@ -1,8 +1,8 @@
 import React, {Fragment} from "react";
 import ImageSlider from "./ImageSlider";
-import Loader from './Loader/Loader';
 import {connect} from "react-redux";
 import MainLoader from "./Loader/MainLoader";
+import Loader from "./Loader/Loader";
 
 const Home = ({images}) => {
     return (

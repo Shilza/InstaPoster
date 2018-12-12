@@ -1,12 +1,13 @@
-import * as React from "react/cjs/react.development";
 import {bindActionCreators} from "redux";
 import * as action from "../../../store/actions";
 import {connect} from "react-redux";
+import {Component} from "react";
+import * as React from "react";
 
-class Loader extends React.Component{
+class Loader extends Component{
 
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
         this.maxImages = 10;
 
@@ -17,6 +18,7 @@ class Loader extends React.Component{
 
     setImages(item){
         const {images, addToImages} = this.props;
+
         if (images.length < this.maxImages)
             addToImages(item);
     }

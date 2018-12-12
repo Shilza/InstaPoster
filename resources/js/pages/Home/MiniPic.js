@@ -21,6 +21,10 @@ class MiniPic extends React.Component {
         setShownImage(item);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.checkerRef.current.checked = nextProps.checked;
+    }
+
     render() {
         const {item, checked} = this.props;
 
@@ -30,7 +34,8 @@ class MiniPic extends React.Component {
                        name="image-switch"
                        ref={this.checkerRef}
                        id={'checker' + item.id}
-                       defaultChecked={checked}/>
+                       defaultChecked={checked}
+                />
                 <span className='mini-pic-holder'>
                     <MiniPicActions image={item} onWatch={this.onWatch}/>
                     <img className='mini-pic' src={item.image}/>

@@ -1,17 +1,24 @@
 import {createSelector} from "reselect/lib/index";
 
 const getImages = state => state.images.images;
-const getDoneImages = createSelector(
+export const getDoneImages = createSelector(
     getImages,
     images => {
-        let doneImages = [...images];
 
-        return doneImages.filter(item => {
-            if(item.done) {
+        return [...images].filter(item => {
+            if(item.done)
                 return item;
-            }
         });
     }
 );
 
-export default getDoneImages;
+export const getShownImage = createSelector(
+    getImages,
+    images => {
+
+        return [...images].filter(item => {
+            if(item.shown)
+                return item;
+        })[0];
+    }
+);
