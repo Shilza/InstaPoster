@@ -55,12 +55,10 @@ class Register extends React.Component {
                         history.push('/');
                     }
                 ).catch(data => {
-                    if (Array.isArray(data.message))
-                        Object.keys(data.message).forEach(item => {
-                            message.error(data.message[item]);
-                        });
-                    else
-                        message.error(data.message);
+                    Object.keys(data.message).forEach(item => {
+                        message.error(data.message[item]);
+                    });
+
                     this.setState({loading: false});
                 });
             }

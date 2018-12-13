@@ -7,8 +7,16 @@ use Illuminate\Notifications\Messages\MailMessage;
 class PasswordResetRequest extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $tries = 3;
+
     private $token;
     private $email;
+
+    /**
+     * PasswordResetRequest constructor.
+     * @param $passwordReset
+     */
     public function __construct($passwordReset)
     {
         $this->token = $passwordReset->token;

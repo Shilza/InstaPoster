@@ -7,9 +7,11 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RegisterSuccess extends Notification
+class RegisterSuccess extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $tries = 3;
 
     /**
      * Create a new notification instance.
@@ -41,9 +43,10 @@ class RegisterSuccess extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Hello!')
+            ->greeting("Hello, $notifiable->username!")
             ->line('You are registered successfully in InstaPoster!')
-            ->line('Thank you for using our application!');
+            ->line('Thank you for using our application!')
+            ->action('Start', env('APP_URL'));
     }
     /**
      * Get the array representation of the notification.

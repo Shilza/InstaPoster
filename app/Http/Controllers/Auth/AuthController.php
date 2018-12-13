@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\InstagramProfile;
+use App\Mail\RegisterSuccessfully;
 use App\Notifications\RegisterSuccess;
 use App\User;
 use App\Utils\InstagramHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
@@ -110,7 +112,7 @@ class AuthController extends Controller
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|max:32|confirmed',
-            'instagramName' => 'required|string|max:255',
+            'instagramLogin' => 'required|string|max:255',
             'instagramPassword' => 'required|string|max:255'
         ]);
         if ($validator->fails()) {
@@ -120,8 +122,12 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if (InstagramHelper::checkProfile($request->instagramName, $request->instagramPassword) &&
-            !InstagramProfile::where('login', $request->instagramName)->first()) {
+        if(InstagramProfile::where('login', $request->instagramLogin)->first())
+            return response()->json([
+                'message' => ['Instagram' => 'Instagram profile already exists']
+            ], 400);
+
+        if (InstagramHelper::checkProfile($request->instagramLogin, $request->instagramPassword)) {
             $password = Hash::make($request->password);
 
             $user = User::create([
@@ -129,7 +135,6 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => $password
             ]);
-            $user->notify(new RegisterSuccess());
 
             InstagramProfile::create([
                 'id' => $user->id,
@@ -137,9 +142,15 @@ class AuthController extends Controller
                 'password' => $request->instagramPassword
             ]);
 
-            return response()->json(['message' => 'Registration completed successfully. Please Log in'], 200);
+            $user->notify(new RegisterSuccess());
+
+            return response()->json([
+                'message' => 'Registration completed successfully. Please Log in'
+            ], 200);
         }
 
-        return response()->json(['message' => 'Instagram login or password invalid'], 400);
+        return response()->json([
+            'message' => ['Instagram' => 'Instagram login or password invalid']
+        ], 400);
     }
 }

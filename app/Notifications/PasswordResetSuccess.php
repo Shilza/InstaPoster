@@ -9,6 +9,9 @@ use Illuminate\Notifications\Messages\MailMessage;
 class PasswordResetSuccess extends Notification implements ShouldQueue
 {
     use Queueable;
+
+    protected $tries = 3;
+
     /**
      * Create a new notification instance.
      *
