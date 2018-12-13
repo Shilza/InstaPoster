@@ -14,4 +14,5 @@ export const ADD_IMAGES = 'ADD_IMAGES';
 export const SET_SHOWN_IMAGE = 'SET_SHOWN_IMAGE';
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 export const SET_DONE = 'SET_DONE';
+export const SET_COMMENT = 'SET_COMMENT';
 export const REMOVE_ALL = 'REMOVE_ALL';

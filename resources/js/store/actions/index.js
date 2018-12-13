@@ -90,6 +90,13 @@ export function setDone(payload) {
     }
 }
 
+export function setComment(payload) {
+    return {
+        type: ActionTypes.SET_COMMENT,
+        payload
+    }
+}
+
 export function removeAll(payload) {
     return {
         type: ActionTypes.REMOVE_ALL,

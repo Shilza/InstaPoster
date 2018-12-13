@@ -3,34 +3,48 @@ import TimePicker from "antd/es/time-picker/index";
 import React from "react";
 import moment from 'moment';
 
-const PostTimePicker = props => {
-    const{
-        disabledDate,
-        datePickerChange,
-        timePickerChange,
-        post_time
-    } = props;
+class PostTimePicker extends React.Component{
 
-    const timeFormat = 'HH:mm';
-    const dateFormat = 'YYYY-MM-DD';
+    constructor(props) {
+        super(props);
 
-    const date = moment(moment.unix(post_time).format(dateFormat));
-    const time = moment(moment.unix(post_time).format(timeFormat));
+        this.disabledDate = this.disabledDate.bind(this);
+    }
 
-    return (
-        <div className='date-picker'>
-            <DatePicker
-                onChange={datePickerChange}
-                defaultValue={date}
-                format={dateFormat}
-                disabledDate={disabledDate}
-            />
-            <TimePicker defaultValue={moment(time._i,timeFormat)}
-                        format={timeFormat}
-                        style={{maxWidth: '100px'}}
-                        onChange={timePickerChange}/>
-        </div>
-    );
-};
+    disabledDate(current) {
+        return current > moment(moment.now()).add(6, 'M');
+    }
+
+    render() {
+
+        const {
+            datePickerChange,
+            timePickerChange,
+            post_time
+        } = this.props;
+
+        const timeFormat = 'HH:mm';
+        const dateFormat = 'YYYY-MM-DD';
+
+        const date = moment(moment.unix(post_time).format(dateFormat));
+        const time = moment(moment.unix(post_time).format(timeFormat));
+
+        return (
+            <div className='date-picker'>
+                <DatePicker
+                    onChange={datePickerChange}
+                    defaultValue={date}
+                    format={dateFormat}
+                    disabledDate={this.disabledDate}
+                />
+                <TimePicker defaultValue={moment(time._i, timeFormat)}
+                            format={timeFormat}
+                            style={{maxWidth: '100px'}}
+                            onChange={timePickerChange}/>
+            </div>
+        );
+    }
+}
+
 
 export default PostTimePicker;

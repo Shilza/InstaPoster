@@ -56,8 +56,14 @@ class Post extends React.Component {
 
         const new_post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
 
+        let failedPostStyle = null;
+        if (post_time < Math.floor(Date.now() / 1000))
+            failedPostStyle = {
+                border: '2px solid #FFFB05'
+            };
+
         return (
-            <div className='post-manager-post-card'>
+            <div className='post-manager-post-card' style={failedPostStyle}>
                 <div className='post-manager-content'>
                     <img
                         className='post-manager-image'

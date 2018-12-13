@@ -14,6 +14,8 @@ const images = (state = initialState, {type, payload = null}) => {
             return removeImage(state, payload);
         case ActionTypes.SET_DONE:
             return setDone(state, payload);
+        case ActionTypes.SET_COMMENT:
+            return setComment(state, payload);
         case ActionTypes.REMOVE_ALL:
             return removeAll();
         default:
@@ -37,6 +39,7 @@ function addImages(state, payload) {
     const newPic = {
         image: payload,
         id: autoIncrement(),
+        comment: '',
         done: false,
         post_time: Math.floor(Date.now() / 1000) + 3600,
         shown: true
@@ -63,6 +66,17 @@ function setDone(state, payload) {
     });
 
     return {images};
+}
+
+function setComment(state, payload) {
+    let images = [...state.images].map(item => {
+        if(item.id === payload.id)
+            item = payload;
+
+        return item;
+    });
+
+    return { images }
 }
 
 function setShown(state, payload) {

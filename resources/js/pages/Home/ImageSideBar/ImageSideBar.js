@@ -12,6 +12,9 @@ import ProfileInfo from "./ProfileInfo";
 import Comment from "../../Common/Fields/Comment";
 import PostTimePicker from "../Common/PostTimePicker";
 import DatePicker from "antd/es/date-picker/index";
+import TextArea from "antd/es/input/TextArea";
+import Input from "antd/es/input/Input";
+import Alert from "antd/es/alert/index";
 
 class ImageSideBar extends React.Component {
 
@@ -19,11 +22,12 @@ class ImageSideBar extends React.Component {
         super(props);
 
         const date = moment(moment.unix(props.shownNowPic.post_time).format('YYYY-MM-DD'))._i;
-        const time = moment(moment.unix(props.shownNowPic.post_time).format('HH:mm'))._i ;
+        const time = moment(moment.unix(props.shownNowPic.post_time).format('HH:mm'))._i;
 
         this.state = {
             date,
-            time
+            time,
+            inputError: false
         };
 
         this.halfHour = 1800;
@@ -31,13 +35,29 @@ class ImageSideBar extends React.Component {
         this.datePickerChange = this.datePickerChange.bind(this);
         this.timePickerChange = this.timePickerChange.bind(this);
         this.submit = this.submit.bind(this);
-        this.disabledDate = this.disabledDate.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+
+        this.reff = React.createRef();
+    }
+
+    handleChange(element) {
+        const {setComment, shownNowPic} = this.props;
+
+        if (element.target.value.length < 10) {
+            let image = shownNowPic;
+            image.comment = element.target.value;
+            setComment(image);
+
+            if(this.state.alert)
+                this.setState({inputError: false});
+        } else
+            this.setState({inputError: true});
     }
 
     datePickerChange(date, dateString) {
         const {time} = this.state;
         const post_time = moment(dateString + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
-        if(post_time > moment().unix() + this.halfHour)
+        if (post_time > moment().unix() + this.halfHour)
             this.setState({date: dateString});
         else
             message.error("Post data is invalid");
@@ -47,15 +67,19 @@ class ImageSideBar extends React.Component {
         this.setState({time: dateString});
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.reff.current.textAreaRef.value = nextProps.shownNowPic.comment;
+    }
+
     submit() {
         const {date, time} = this.state;
         const {form} = this.props;
 
         const post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
-        if(post_time > moment().unix() + this.halfHour) {
+        if (post_time > moment().unix() + this.halfHour) {
             const {setDone, shownNowPic} = this.props;
             form.validateFields((err, {comment}) => {
-                if (!err){
+                if (!err) {
                     comment = comment ? comment : "";
                     setDone({...shownNowPic, post_time, comment, done: true});
                 }
@@ -65,27 +89,35 @@ class ImageSideBar extends React.Component {
             message.error("Post data is invalid");
     }
 
-    disabledDate(current) {
-        return current > moment(moment.now()).add(6, 'M');
-    }
-
     render() {
         const {shownNowPic, form} = this.props;
+        const textAreaSize = {minRows: 7, maxRows: 7};
+        const {inputError} = this.state;
 
         return (
             <div className='post-settings-container'>
                 <ProfileInfo getFieldDecorator={form.getFieldDecorator}/>
-                <Comment
-                    getFieldDecorator={form.getFieldDecorator}
+                <TextArea
+                    ref={this.reff}
+                    autosize={textAreaSize}
+                    onChange={this.handleChange}
+                    placeholder='Your text'
                 />
+                {
+                    inputError &&
+                    <Alert
+                        message="Error Text"
+                        type="error"
+                        style={{marginTop: 10, marginBottom: 10}}
+                    />
+                }
                 <PostTimePicker
-                    disabledDate={this.disabledDate}
                     datePickerChange={this.datePickerChange}
                     timePickerChange={this.timePickerChange}
                     post_time={shownNowPic.post_time}
                 />
                 <div className='submit-image-container'>
-                <Button type="primary" onClick={this.submit}>Submit</Button>
+                    <Button type="primary" onClick={this.submit}>Submit</Button>
                 </div>
             </div>
         );
@@ -94,7 +126,8 @@ class ImageSideBar extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        setDone: action.setDone
+        setDone: action.setDone,
+        setComment: action.setComment
     }, dispatch);
 };
 

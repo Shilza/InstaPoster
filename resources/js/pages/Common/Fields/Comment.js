@@ -1,8 +1,10 @@
 import React from "react";
 import TextArea from "antd/es/input/TextArea";
 import FormItem from "antd/es/form/FormItem";
+import Input from "antd/es/input/Input";
 
 const Comment = ({getFieldDecorator, autoSize, style, initialValue}) => {
+
     return (
         <FormItem style={style}>
             {getFieldDecorator('comment', {
@@ -22,8 +24,7 @@ const Comment = ({getFieldDecorator, autoSize, style, initialValue}) => {
 
 Comment.defaultProps = {
     autoSize: {minRows: 7, maxRows: 7},
-    style: {},
-    initialValue: null
+    style: {}
 };
 
 export default Comment;
