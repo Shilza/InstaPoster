@@ -31,27 +31,30 @@ class ImageSideBar extends React.Component {
         };
 
         this.halfHour = 1800;
+        this.maxTASize = 1000;
 
         this.datePickerChange = this.datePickerChange.bind(this);
         this.timePickerChange = this.timePickerChange.bind(this);
         this.submit = this.submit.bind(this);
         this.handleChange = this.handleChange.bind(this);
 
-        this.reff = React.createRef();
+        this.textAreaRef = React.createRef();
     }
 
     handleChange(element) {
         const {setComment, shownNowPic} = this.props;
 
-        if (element.target.value.length < 10) {
+        if (element.target.value.length < this.maxTASize) {
             let image = shownNowPic;
             image.comment = element.target.value;
             setComment(image);
 
-            if(this.state.alert)
+            if(this.state.inputError)
                 this.setState({inputError: false});
-        } else
+        } else {
+            this.textAreaRef.current.textAreaRef.value = element.target.value.substring(0, this.maxTASize);
             this.setState({inputError: true});
+        }
     }
 
     datePickerChange(date, dateString) {
@@ -68,22 +71,23 @@ class ImageSideBar extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.reff.current.textAreaRef.value = nextProps.shownNowPic.comment;
+        if(nextProps.shownNowPic.comment < this.maxTASize && this.state.inputError)
+            this.setState({inputError: false});
+        else if(nextProps.shownNowPic.comment >= this.maxTASize)
+            this.setState({inputError: true});
+
+        this.textAreaRef.current.textAreaRef.value = nextProps.shownNowPic.comment;
     }
 
     submit() {
         const {date, time} = this.state;
-        const {form} = this.props;
 
         const post_time = moment(date + '-' + time, 'YYYY-MM-DD-HH:mm').unix();
         if (post_time > moment().unix() + this.halfHour) {
             const {setDone, shownNowPic} = this.props;
-            form.validateFields((err, {comment}) => {
-                if (!err) {
-                    comment = comment ? comment : "";
-                    setDone({...shownNowPic, post_time, comment, done: true});
-                }
-            });
+
+            setDone({...shownNowPic, post_time, done: true});
+
             message.success("Submit successfully");
         } else
             message.error("Post data is invalid");
@@ -98,7 +102,7 @@ class ImageSideBar extends React.Component {
             <div className='post-settings-container'>
                 <ProfileInfo getFieldDecorator={form.getFieldDecorator}/>
                 <TextArea
-                    ref={this.reff}
+                    ref={this.textAreaRef}
                     autosize={textAreaSize}
                     onChange={this.handleChange}
                     placeholder='Your text'
@@ -106,7 +110,7 @@ class ImageSideBar extends React.Component {
                 {
                     inputError &&
                     <Alert
-                        message="Error Text"
+                        message={"Comment should not exceed " + this.maxTASize + " characters!"}
                         type="error"
                         style={{marginTop: 10, marginBottom: 10}}
                     />
