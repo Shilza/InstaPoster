@@ -46,7 +46,7 @@ class RegisterSuccess extends Notification implements ShouldQueue
             ->greeting("Hello, $notifiable->username!")
             ->line('You are registered successfully in InstaPoster!')
             ->line('Thank you for using our application!')
-            ->action('Start', env('APP_URL'));
+            ->action('Start', config('app.url'));
     }
     /**
      * Get the array representation of the notification.

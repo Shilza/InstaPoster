@@ -56,10 +56,10 @@ class AuthController extends Controller
 
             //if (InstagramHelper::checkProfile($item['login'], $item['password'])) {
 
-                unset($item['password']);
+            unset($item['password']);
             array_push($validProfiles, $item);
             //} else
-                //InstagramProfile::where('login', $item['login'])->first()->delete();
+            //InstagramProfile::where('login', $item['login'])->first()->delete();
         }
 
         return $validProfiles;
@@ -122,7 +122,7 @@ class AuthController extends Controller
             ], 422);
         }
 
-        if(InstagramProfile::where('login', $request->instagramLogin)->first())
+        if (InstagramProfile::where('login', $request->instagramLogin)->first())
             return response()->json([
                 'message' => ['Instagram' => 'Instagram profile already exists']
             ], 400);
@@ -139,7 +139,10 @@ class AuthController extends Controller
             InstagramProfile::create([
                 'id' => $user->id,
                 'login' => $request->instagramLogin,
-                'password' => $request->instagramPassword
+                'password' => $request->instagramPassword,
+                'avatar' => InstagramHelper::getProfileImage(
+                    $request->instagramLogin, $request->instagramPassword
+                )
             ]);
 
             $user->notify(new RegisterSuccess());

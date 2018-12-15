@@ -55,7 +55,13 @@ export function refresh() {
 }
 
 export function resetPassword(credentials) {
-    return dispatch => Http.post('api/auth/password/create', credentials)
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.post('api/auth/password/create', credentials)
+                .then(({data}) => { return resolve(data.message) })
+                .catch(({response}) => { return reject(response.data.message)})
+        })
+    )
 }
 
 export function updatePassword(credentials) {

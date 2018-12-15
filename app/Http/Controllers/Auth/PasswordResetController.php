@@ -39,6 +39,7 @@ class PasswordResetController extends Controller
             'message' => 'We have e-mailed your password reset link!'
         ]);
     }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse

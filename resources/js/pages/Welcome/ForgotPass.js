@@ -30,10 +30,15 @@ class ForgotPass extends React.Component {
         form.validateFields((err, {email}) => {
             if (!err) {
                 this.setState({loading: true});
-                resetPassword({email}).then(() => {
-                    this.setState({loading: false});
-                    message.success('Check your email');
-                });
+                resetPassword({email})
+                    .then(data => {
+                        this.setState({loading: false});
+                        message.success(data);
+                    })
+                    .catch(data => {
+                        this.setState({loading: false});
+                        message.error(data);
+                    });
             }
         });
     }
@@ -65,7 +70,7 @@ class ForgotPass extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return bindActionCreators({
-        resetPassword: AuthService.resetPassword,
+        resetPassword: AuthService.resetPassword
     }, dispatch);
 };
 
