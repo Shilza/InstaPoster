@@ -27,7 +27,7 @@ return [
     | Defaults to 1 hour
     |
     */
-    'ttl' => 1000,
+    'ttl' => 1,
     /*
     |--------------------------------------------------------------------------
     | Refresh time to live
@@ -39,7 +39,7 @@ return [
     | Defaults to 2 weeks
     |
     */
-    'refresh_ttl' => 2,
+    'refresh_ttl' => 0,
     /*
     |--------------------------------------------------------------------------
     | JWT hashing algorithm

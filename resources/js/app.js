@@ -14,7 +14,7 @@ void async function start() {
             document.getElementById('root')
         );
 
-        await store.dispatch(AuthService.me());
+        await store.dispatch(AuthService.me()).catch(e => {});
     }
 
     render(
