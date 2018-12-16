@@ -25,22 +25,25 @@
     justify-content: space-between;
 }
 
-@media (max-width: 425px) {
-    .post-settings-container {
-        border-top: 0;
-        margin-top: 3%;
-    }
-}
-
 .date-picker {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+@media (max-width: 425px) {
+    .post-settings-container {
+        border-top: 0;
+        margin-top: 3%;
+    }
+
+    .date-picker {
+        margin: 5% 0 5% 0;
+    }
+}
+
 .submit-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
 }
