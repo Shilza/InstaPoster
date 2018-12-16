@@ -169,7 +169,7 @@ class PostController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|int',
             'login' => 'required|string|max:255',
-            'comment' => 'string|null|max:1000',
+            'comment' => 'string|nullable|max:1000',
             'post_time' => "required|int|min:0|max:$maxPostTime"
         ]);
         if (!$validator->fails()) {
