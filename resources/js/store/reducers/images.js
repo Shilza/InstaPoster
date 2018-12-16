@@ -102,7 +102,7 @@ function removeImage(state, payload) {
         }
     });
 
-    if(!shownContains)
+    if(!shownContains && images.length)
         images[images.length - 1].shown = true;
 
     return {images}
