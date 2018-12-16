@@ -7,7 +7,6 @@ const token = document.head.querySelector('meta[name="csrf-token"]');
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('access_token')}`;
-axios.defaults.baseURL = 'http://176.113.83.168/';
 
 axios.interceptors.response.use(
     response => response,

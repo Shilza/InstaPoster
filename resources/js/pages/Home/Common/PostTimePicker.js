@@ -12,7 +12,7 @@ class PostTimePicker extends React.Component{
     }
 
     disabledDate(current) {
-        return current > moment(moment.now()).add(6, 'M');
+        return current && current < moment().subtract(1, 'days');
     }
 
     render() {
