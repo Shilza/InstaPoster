@@ -6,6 +6,7 @@ use App\InstagramProfile;
 use App\Utils\InstagramHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use InstagramAPI\Exception\ChallengeRequiredException;
 
 class InstagarmProfileController extends Controller
 {
@@ -28,22 +29,29 @@ class InstagarmProfileController extends Controller
             return response()->json([
                 'message' => 'Profile already added'
             ], 400);
-        if(InstagramHelper::checkProfile(
-                $request->instagramName, $request->instagramPassword
-        )){
-            $profile = InstagramProfile::create([
-                'id' => auth()->user()['id'],
-                'login' => $request->instagramName,
-                'password' => $request->instagramPassword,
-                'avatar' => InstagramHelper::getProfileImage(
-                    $request->instagramName, $request->instagramPassword
-                )
-            ]);
 
+        try {
+            if (InstagramHelper::checkProfile(
+                $request->instagramName, $request->instagramPassword
+            )) {
+                $profile = InstagramProfile::create([
+                    'id' => auth()->user()['id'],
+                    'login' => $request->instagramName,
+                    'password' => $request->instagramPassword,
+                    'avatar' => InstagramHelper::getProfileImage(
+                        $request->instagramName, $request->instagramPassword
+                    )
+                ]);
+
+                return response()->json([
+                    'message' => 'Instagram profile successfully added',
+                    'profile' => $profile
+                ], 200);
+            }
+        } catch (ChallengeRequiredException $e){
             return response()->json([
-                'message' => 'Instagram profile successfully added',
-                'profile' => $profile
-            ], 200);
+                'message' => 'CRE'
+            ], 400);
         }
 
         return response()->json([

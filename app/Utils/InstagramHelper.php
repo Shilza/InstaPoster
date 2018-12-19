@@ -2,6 +2,7 @@
 
 namespace App\Utils;
 
+use InstagramAPI\Exception\ChallengeRequiredException;
 use InstagramAPI\Instagram;
 use InstagramAPI\Media\Photo\InstagramPhoto;
 
@@ -34,7 +35,10 @@ class InstagramHelper
             $instagram = new Instagram(false, false);
             $instagram->login($login, $password);
             return true;
-        } catch (\Exception $e){
+        } catch(ChallengeRequiredException $e) {
+            throw $e;
+        }
+        catch (\Exception $e){
             return false;
         }
     }
