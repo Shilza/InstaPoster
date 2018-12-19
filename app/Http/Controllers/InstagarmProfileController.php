@@ -7,6 +7,7 @@ use App\Utils\InstagramHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use InstagramAPI\Exception\ChallengeRequiredException;
+use InstagramAPI\Exception\InstagramException;
 
 class InstagarmProfileController extends Controller
 {
@@ -48,7 +49,8 @@ class InstagarmProfileController extends Controller
                     'profile' => $profile
                 ], 200);
             }
-        } catch (ChallengeRequiredException $e){
+        } catch (InstagramException $e){
+            var_dump($e);
             return response()->json([
                 'message' => 'CRE'
             ], 400);
