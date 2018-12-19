@@ -50,7 +50,7 @@ class InstagarmProfileController extends Controller
                 'profile' => $profile
             ], 200);
         }
-        
+
         return response()->json([
             'message' => 'Incorrect login or password'
         ], 400);
