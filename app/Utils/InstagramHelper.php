@@ -30,17 +30,12 @@ class InstagramHelper
      * @return bool
      */
     public static function checkProfile($login, $password){
-        try {
+        
             Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
             $instagram = new Instagram(false, false);
             $instagram->login($login, $password);
             return true;
-        } catch(ChallengeRequiredException $e) {
-            throw $e;
-        }
-        catch (\Exception $e){
-            return false;
-        }
+
     }
 
     /**
