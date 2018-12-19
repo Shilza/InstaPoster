@@ -52,6 +52,10 @@ class InstagarmProfileController extends Controller
             return response()->json([
                 'message' => 'CRE'
             ], 400);
+        } catch(\Exception $e) {
+            return response()->json([
+                'message' => 'Incorrect login or password'
+            ], 400);
         }
 
         return response()->json([

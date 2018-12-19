@@ -12,14 +12,15 @@ class InstagramHelper
     const STATUS_OK = 200;
 
 
-    public static function getProfileImage($login, $password) {
+    public static function getProfileImage($login, $password)
+    {
         try {
             Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
             $instagram = new Instagram(false, false);
             $instagram->login($login, $password);
 
             return $instagram->account->getCurrentUser()->getUser()->getProfilePicUrl();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return null;
         }
     }
@@ -29,20 +30,20 @@ class InstagramHelper
      * @param $password
      * @return bool
      */
-    public static function checkProfile($login, $password){
-        
-            Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
-            $instagram = new Instagram(false, false);
-            $instagram->login($login, $password);
-            return true;
-
+    public static function checkProfile($login, $password)
+    {
+        Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
+        $instagram = new Instagram(false, false);
+        $instagram->login($login, $password);
+        return true;
     }
 
     /**
      * @param $post
      * @return bool
      */
-    public static function uploadPhoto($post) {
+    public static function uploadPhoto($post)
+    {
         try {
             Instagram::$allowDangerousWebUsageAtMyOwnRisk = true;
             $instagram = new Instagram(false, false);
@@ -72,7 +73,8 @@ class InstagramHelper
      * @param $image
      * @return string
      */
-    private static function getPath($image) {
+    private static function getPath($image)
+    {
         $sb = substr($image, 8);
         return "storage/app/public/" . $sb;
     }
